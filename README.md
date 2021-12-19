@@ -28,3 +28,7 @@ or delete posts
  - able to edit/delete all posts or users
 
  
+
+
+## Trello: 
+[https://trello.com/b/1qm6ACeN/master-piece-project](https://trello.com/b/1qm6ACeN/master-piece-project)
