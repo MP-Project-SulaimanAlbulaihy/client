@@ -2,8 +2,8 @@
 "Borrow something", a website for borrowing things where the user can publish his items and reserve items to borrow,
 and this website should be based on his location as he can only borrow if he is a neighbor to the poster and much more..
 
-Deployment: https://Deployment.com //Later on
-While running locally: http://localhost:3000
+Deployment: https://Deployment.com //Later on  <br/>
+Local: http://localhost:3000 <br/>
 Slides: https://Slides  //Later on
 
 ## Trello: 
