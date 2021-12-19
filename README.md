@@ -27,7 +27,8 @@ or delete posts
  - navigate to other pages and different categories
  - able to edit/delete all posts or users
 
- 
+## UML Diagram
+![masterpiece UML Diagram frontend](https://i.ibb.co/Yf4t8mr/Untitled-Diagram-drawio-3.png)
 
 
 ## Trello: 
