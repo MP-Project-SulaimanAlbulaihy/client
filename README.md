@@ -8,7 +8,7 @@ and this website should be based on his location as he can only borrow if he is 
 
 
 ## User Story
- ##### As a "User" of "Borrow Something Website":
+ As a "User" of "Borrow Something Website":
  I want to borrow an item for a limited time for free,
  or lend/give something to other people for charity for a limited time, 
  to help others and gain good deeds especially with people of my area.
@@ -22,7 +22,7 @@ and this website should be based on his location as he can only borrow if he is 
  - see hisory of items borrowed and pending items for borrowing and already in use.
  - see requestus if any of people want to borrow
 
-##### As "admin" of "Borrow Something Website": 
+As "admin" of "Borrow Something Website": 
 I can see users and posts and messages of people, and block users if needed
 or delete posts
  Ensure that the 'admin' able to:
@@ -39,43 +39,32 @@ or delete posts
 | Path                   | Component          | Permissions | Behavior                                                    |
 | ---------------------- | ------------------ | ----------- | ----------------------------------------------------------- |
 | `/`                    | Home               | public      | Home page, show all items and seach or choose category                  |
-| `/explore`             | Explore            | public      | Shows all auctions                                             |
-| `/explore/:id`         | Auction               | public      | See an auction description, and also you can bid               |
-| `/users/:id`           | Profile            | public      | See a user profile, with all of his auctions                |
-| `/signup`              | Signup             | public      | Signup form, navigate to login after signup                 |
+| `/post/:id`         | Post               | public      | see the item ans its details with pictures               |
+| `/dashboard/:id`           | Dashboard            | user only      | See a user profile, with all of his reserved and pending and published items                |
+| `/signup`              | Signup             | public      | Signup form to register for the website                 |
 | `/login`               | Login              | public      | Login form, navigate to home after login                   |
-| `/addItem`             | createAuction            | user only   | Create a new auction                                        |
-| `/EditItem`            | EditAuction           | user only   | Edit an auction                                             |
-| `/dashboard`           | Dashboard          | user only   | Shows all of the user info                                  |
-| `/dashboard/myAccount` | DashboardMyAccount | user only   | Shows all of the user info, and he/she can edit any info    |
-| `/dashboard/myItems`   | DashboardMyAuctions   | user only   | Shows all of the user auctions, and he/she can edit any auction   |
-| `/dashboard/myBids`    | DashboardMyBids    | user only   | Shows all of the user bids                                  |
-| `/dashboard/watchList`    | DashboardWatchList    | user only   | Shows the user watch list                                  |
-| `/dashboard/items`     | DashboardAuctions     | admin only  | Shows all auctions in site                                  |
-| `/dashboard/users`     | DashboardUsers     | admin only  | Shows all users in site                                  |
-| `/dashboard/reports`   | DashboardReports   | admin only  | Shows reports in the site, and admin can change their status |
-| `/verify_account/id`   | VerifyTheAccount   | user only   | A page enables the user to activate their account           |
-| `/verify_from_email`   | VerifyFromEmail    | user only   | A wlecome page to a user after register                     |
-| `/reset_password/id`   | ResetPassword      | user only   | A page to let a user change his password                    |
+| `/post`             | CreatePost            | user only   | Create a new item for others                                        |
+| `/favourite`            | Favourite           | user only   | see user favourites and edit them                                             |
+| `/post_edit`           | EditPost          | user only   | edit the post                                  |
+| `/messages` | Messages | user only   | Shows all user messages and history    |
+| `/forgot_password/id`   | ResetPassword   | user only   | A page enables the user to request his password if he forgot it           |
+| `/verify_from_sms`   | VerifyFromSMS    | user only   | A wlecome page to a user after register                     |
 
 ## Components
 
 - Home
-- Explore
-- Auction
-- Profile
+- Item
 - Login
 - Signup
-- CreateAuction
-- EditAuction
+- CreatePost
+- EditPost
 - Dashboard
-- DashboardMyAccount
-- DashboardMyAuctions
-- DashboardWatchList
-- DashboardMyBids
-- DashboardAuctions
-- DashboardUsers
-- DashboardReports
-- VerifyTheAccount
-- VerifyFromEmail
 - ResetPassword
+- Messages
+- VerifyFromSMS
+- Favourite
+- Navbar
+- Footer
+- Notifications
+- Post
+- Comments
