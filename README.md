@@ -71,3 +71,13 @@ or delete posts
 - Notifications
 - Post
 - Comments
+
+## Wireframe
+
+![masterpiece Wireframe frontend](https://i.ibb.co/4KvgH4z/1.png)
+![masterpiece Wireframe frontend](https://i.ibb.co/9bykPYQ/2.png)
+![masterpiece Wireframe frontend](https://i.ibb.co/r6g0W3Q/3.png)
+![masterpiece Wireframe frontend](https://i.ibb.co/R2d31yF/4.png)
+![masterpiece Wireframe frontend](https://i.ibb.co/1G2x3sD/5.png)
+![masterpiece Wireframe frontend](https://i.ibb.co/CPSWqLH/6.png)
+![masterpiece Wireframe frontend](https://i.ibb.co/PcNjWcM/7.png)
