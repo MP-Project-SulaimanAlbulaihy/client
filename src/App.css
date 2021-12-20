@@ -1,0 +1,25 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;}
+
+.navbar{
+  width: 100%;
+  background-color: brown;
+  display: flex;
+  justify-content: space-around;
+  height: 50px;
+  align-items: center;
+  color: white;
+}
+
+.navbar button{
+  height: 100%;
+  width: 130px;
+  border: none;
+  color: white;
+  background-color: rgba(165, 42, 42, 0);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
