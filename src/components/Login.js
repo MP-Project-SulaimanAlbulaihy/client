@@ -10,23 +10,19 @@ const Login = () => {
   const login = async (e) => {
     try {
       e.preventDefault();
-      const result = await axios.post(
-        `${BASE_URL}/login`,
-        {
-          email: e.target.email.value,
-          password: e.target.password.value,
-        },
-        { withCredentials: true }
-      );
-
-      if (result.data.err) {
-        setErr(result.data.err);
-        // localStorage.setItem("role", result.data.result.role.role);
-      } else if (result.data.success) {
-        console.log("helllllo");
-        localStorage.setItem("token", true);
-        navigate("/posts");
-      }
+      const result = await axios.post(`${BASE_URL}/login`, {
+        mobileOrUsername: e.target.mobileOrUsername.value,
+        password: e.target.password.value,
+      });
+      console.log(result.data);
+      // if (result.data.err) {
+      //   setErr(result.data.err);
+      //   // localStorage.setItem("role", result.data.result.role.role);
+      // } else if (result.data.success) {
+      //   console.log("helllllo");
+      //   localStorage.setItem("token", true);
+      //   navigate("/posts");
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -35,17 +31,17 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="home">
+      <div className="sign_form">
         <h1>Login</h1>
 
         <form onSubmit={login}>
-          <label htmlFor="email">Email:</label>
-          <input type="email" name="email" />
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="mobileOrUsername">Mobile or Username</label>
+          <input type="text" name="mobileOrUsername" />
+          <label htmlFor="password">Password</label>
           <input type="password" name="password" />
           <button type="submit">Login</button>
         </form>
-        <p>{err}</p>
+        {/* <p>{err}</p> */}
         <p
           className="forgot"
           onClick={() => {

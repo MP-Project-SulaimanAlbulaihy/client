@@ -1,10 +1,14 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Nunito', sans-serif;}
+  font-family: "Nunito", sans-serif;
+}
 
-.navbar{
+button {
+  cursor: pointer;
+}
+.navbar {
   width: 100%;
   background-color: brown;
   display: flex;
@@ -14,12 +18,41 @@
   color: white;
 }
 
-.navbar button{
+.navbar button {
   height: 100%;
   width: 130px;
   border: none;
   color: white;
   background-color: rgba(165, 42, 42, 0);
   font-size: 1.4rem;
+}
+
+.sign_form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 5% auto;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: brown;
+  height: 400px;
+  color: white;
+}
+.sign_form form {
+  display: flex;
+  flex-direction: column;
+}
+.sign_form form input {
+  margin-bottom: 10px;
+}
+.addpost {
+  width: 80%;
+}
+.upload label {
+  background: white;
+  color: black;
   cursor: pointer;
+}
+.imagesPost{
+  display: flex;
 }
