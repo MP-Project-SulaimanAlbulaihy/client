@@ -56,3 +56,16 @@ button {
 .imagesPost{
   display: flex;
 }
+.marker{
+  font-size: 25px;
+  margin: -28px -16px;
+}
+.items_post{
+  text-align: right;
+  border: 1px solid white;
+  width: 100%;
+  padding: 3px 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

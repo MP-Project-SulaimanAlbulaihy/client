@@ -14,11 +14,19 @@ const NewPost = () => {
   const add_new_post = async (e) => {
     try {
       e.preventDefault();
-      const result = await axios.post(`${BASE_URL}/post`, {
-        mobileOrUsername: e.target.mobileOrUsername.value,
-        password: e.target.password.value,
-      });
-      console.log(result.data);
+      if (!e.target.title.value || !e.target.desc.value || !e.target.category.value) {
+        setErr("Kindly fill all the inputs");
+      } else {
+        setErr("");
+        const result = await axios.post(`${BASE_URL}/post`, {
+          title: e.target.title.value,
+          desc: e.target.desc.value,
+          category: e.target.category.value,
+          duration: e.target.duration.value,
+          img: images,
+        });
+        console.log(result.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -26,7 +34,8 @@ const NewPost = () => {
 
   const uploadPictures = (e) => {
     let image = e.target.files[0];
-    if (image == null) return;
+    const dataType = image.name.match(/\.(jpe?g|png|gif)$/gi);
+    if (image == null || dataType == null) return;
     const storageRef = ref(storage, `images/${image.name}`);
     const uploadImamge = uploadBytesResumable(storageRef, image);
     uploadImamge.on(
@@ -46,8 +55,7 @@ const NewPost = () => {
   };
 
   useEffect(() => {
-    console.log("images effected ", images);
-    setProgress(0)
+    setProgress(0);
   }, [images]);
   return (
     <>
@@ -60,29 +68,46 @@ const NewPost = () => {
           <input type="text" name="title" />
           <label htmlFor="desc">Description</label>
           <textarea type="text" name="desc" />
+          <label htmlFor="category">Category</label>
+          <select name="category">
+            <option value="tools">أدوات منزلية</option>
+            <option value="furniture">أثاث</option>
+            <option value="food">مواد غذائية</option>
+            <option value="other">أخرى</option>
+          </select>
           <label htmlFor="duration">Duration</label>
-          <input type="text" name="duration" />
+          <select name="duration">
+            <option value="1">دقيقة 30</option>
+            <option value="2">ساعة</option>
+            <option value="3">ساعتين</option>
+            <option value="4">يوم</option>
+            <option value="5">يومين</option>
+            <option value="6">تبرع لوجه الله</option>
+          </select>
+          <br />
           <div className="upload">
             <input
               type="file"
+              accept=".gif,.jpg,.jpeg,.png"
               onChange={(e) => {
                 uploadPictures(e);
               }}
               id="img"
               style={{ display: "none" }}
             />
-            <label for="img">Upload Images</label>
-
-            {!(progress == 0) ? <p>Uploading {progress}%</p> : null}<br/>
+            <label htmlFor="img">Upload Images</label>
+            {!(progress == 0) ? <p>Uploading {progress}%</p> : null}
+            <br />
           </div>
           <div className="imagesPost">
             {images?.map((image) => (
               <img src={image} width="80px" height="80px" />
             ))}
           </div>
+          <br />
           <button type="submit">Add Post</button>
         </form>
-        {/* <p>{err}</p> */}
+        <p>{err}</p>
 
         <button
           onClick={() => {
