@@ -52,15 +52,27 @@ button {
   background: white;
   color: black;
   cursor: pointer;
+  padding: 7px;
 }
-.imagesPost{
+.imagesPost {
   display: flex;
 }
-.marker{
+.marker {
   font-size: 25px;
   margin: -28px -16px;
 }
-.items_post{
+.items {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 0 auto 5% auto;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: brown;
+  height: 400px;
+  color: white;
+}
+.items_post {
   text-align: right;
   border: 1px solid white;
   width: 100%;
@@ -68,4 +80,17 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.items_post img{
+  cursor: pointer;
+}
+.reqBtns {
+  width: 40%;
+  margin: 5% auto 1px auto;
+}
+.reqBtns button{
+  padding: 7px;
+}
+.items_post_text{
+  cursor: pointer;
 }

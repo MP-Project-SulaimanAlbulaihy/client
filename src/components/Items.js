@@ -23,22 +23,24 @@ const Items = () => {
   }, []);
 
   return (
-    <div className="sign_form">
-      {posts
-        ?.map((item) => {
-          return (
-            <div key={item._id} className="items_post">
-              <div onClick={() => navigate(`/post/${item._id}`)}>
-                <img src={item.img[0]} wdith="90" height="90" alt="" />
+    <div className="items">
+      {posts.length ? (
+        posts
+          .map((item) => {
+            return (
+              <div key={item._id} className="items_post">
+                  <img src={item.img[0]} wdith="90" height="90" alt=""  onClick={() => navigate(`/post/${item._id}`)}/>
+                <div  onClick={() => navigate(`/post/${item._id}`)} className="items_post_text">
+                  <h2>{item.title}</h2>
+                  <p>created at {item.createdAt.slice(0, 10)}</p>
+                </div>
               </div>
-              <div>
-                <h2>{item.title}</h2>
-                <p>created at {item.createdAt.slice(0, 10)}</p>
-              </div>
-            </div>
-          );
-        })
-        .reverse()}
+            );
+          })
+          .reverse()
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </div>
   );
 };
