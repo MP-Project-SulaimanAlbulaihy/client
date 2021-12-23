@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
-const NewPost = () => {
+const NewPost = ({props}) => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState("");
   const [progress, setProgress] = useState(0);
   const [images, setImages] = useState([]);
+
+  const { state } = useLocation();
 
   const add_new_post = async (e) => {
     try {
@@ -53,7 +55,7 @@ const NewPost = () => {
       }
     );
   };
-
+  console.log(props);
   useEffect(() => {
     setProgress(0);
   }, [images]);
@@ -61,8 +63,9 @@ const NewPost = () => {
     <>
       <Navbar />
       <div className="sign_form">
-        <h1>Add Post</h1>
-
+        { state == 'request'?
+        <h1>Request Item</h1>:<h1>Add Post</h1>
+      }
         <form onSubmit={add_new_post} className="addpost">
           <label htmlFor="title">Title</label>
           <input type="text" name="title" />
