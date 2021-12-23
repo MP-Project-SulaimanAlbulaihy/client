@@ -30,10 +30,11 @@ const Items = () => {
             return (
               <div key={item._id} className="items_post">
                   <img src={item.img[0]} wdith="90" height="90" alt=""  onClick={() => navigate(`/post/${item._id}`)}/>
-                <div  onClick={() => navigate(`/post/${item._id}`)} className="items_post_text">
-                  <h2>{item.title}</h2>
+                <div className="items_post_text">
+                  <h2 onClick={() => navigate(`/post/${item._id}`)}>{item.title}</h2>
                   <p>created at {item.createdAt.slice(0, 10)}</p>
                 </div>
+                <div className="items_post_status"><h2>{item.status}</h2></div>
               </div>
             );
           })

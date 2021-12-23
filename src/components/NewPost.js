@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
-const NewPost = ({props}) => {
+const NewPost = ({ props }) => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState("");
@@ -25,9 +25,11 @@ const NewPost = ({props}) => {
           desc: e.target.desc.value,
           category: e.target.category.value,
           duration: e.target.duration.value,
+          status: state ? state : "post",
           img: images,
         });
         console.log(result.data);
+        navigate('/')
       }
     } catch (error) {
       console.log(error);
@@ -55,18 +57,17 @@ const NewPost = ({props}) => {
       }
     );
   };
-  console.log(props);
+
   useEffect(() => {
     setProgress(0);
   }, [images]);
+
   return (
     <>
       <Navbar />
-      <div className="sign_form">
-        { state == 'request'?
-        <h1>Request Item</h1>:<h1>Add Post</h1>
-      }
-        <form onSubmit={add_new_post} className="addpost">
+      <div className="add_post">
+        {state == "request" ? <h1>Request Item</h1> : <h1>Add Post</h1>}
+        <form onSubmit={add_new_post} className="addpost_form">
           <label htmlFor="title">Title</label>
           <input type="text" name="title" />
           <label htmlFor="desc">Description</label>
@@ -99,7 +100,7 @@ const NewPost = ({props}) => {
               style={{ display: "none" }}
             />
             <label htmlFor="img">Upload Images</label>
-            {!(progress == 0) ? <p>Uploading {progress}%</p> : null}
+            {(progress == 0) ? <div className="progress"><p>Uploading {progress}%</p></div> : null}
             <br />
           </div>
           <div className="imagesPost">
@@ -108,7 +109,7 @@ const NewPost = ({props}) => {
             ))}
           </div>
           <br />
-          <button type="submit">Add Post</button>
+          {state == "request" ? <button type="submit">Request Item</button> : <button type="submit">Add Post</button>}
         </form>
         <p>{err}</p>
 
