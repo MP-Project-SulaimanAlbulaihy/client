@@ -100,8 +100,7 @@ const NewPost = ({ props }) => {
               style={{ display: "none" }}
             />
             <label htmlFor="img">Upload Images</label>
-            {(progress == 0) ? <div className="progress"><p>Uploading {progress}%</p></div> : null}
-            <br />
+            {!(progress == 0) ? <div className="progress"><p>Uploading {progress}%</p></div> : null}
           </div>
           <div className="imagesPost">
             {images?.map((image) => (

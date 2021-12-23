@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
-import $ from "jquery";
-
 const Item = () => {
   const { pathname } = useLocation();
   const post_id = pathname.match(/(?:.(?!\/))+$/g)[0].slice(1);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [post, setPost] = useState([]);
-
+  const [ReqBtn, setReqBtn] = useState(false);
+  const [resBtn, setResBtn] = useState(false);
+  const noteRest = useRef(null)
   const getPost = () => {
     try {
       axios.get(`${BASE_URL}/post/${post_id}`).then((result) => {
@@ -20,11 +20,17 @@ const Item = () => {
       console.log(error);
     }
   };
-  const [ReqBtn, setReqBtn] = useState(false);
-  const [resBtn, setResBtn] = useState(false);
   useEffect(() => {
     getPost();
   }, []);
+
+  window.onclick = e => {
+    if (e.target === noteRest.current) {
+      setReqBtn(false)
+      setResBtn(false)
+    }
+  }
+  
   return (
     <div>
       <Navbar />
@@ -44,7 +50,7 @@ const Item = () => {
       </div>
 
       {ReqBtn ? (
-        <div className="notePageRest" onClick={()=>{setReqBtn(false)}}>
+        <div className="notePageRest" ref={noteRest} >
             <div className="notePage">
             <h3>Note:</h3>
             <textarea name="note" id="" cols="30" rows="10" placeholder="هل تريد اضافة ملاحظة لصاحب السلعة.."></textarea>
@@ -56,11 +62,13 @@ const Item = () => {
       )}
 
       {resBtn ? (
-        <div className="notePage">
-          <h3>Your request has been recieved</h3>
-          <p>Kinldy wait for owner approval</p>
-          <p>You can check status of request in dashboard page</p>
-          <button onClick={() => setResBtn(false)}>OK</button>
+        <div className="notePageRest" ref={noteRest} >
+          <div className="notePage">
+            <h3>Your request has been recieved</h3>
+            <p>Kinldy wait for owner approval</p>
+            <p>You can check status of request in dashboard page</p>
+            <button onClick={() => setResBtn(false)}>OK</button>
+          </div>
         </div>
       ) : (
         <></>

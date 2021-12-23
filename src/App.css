@@ -84,6 +84,7 @@ button {
   margin-top: 10px;
 }
 .imagesPost {
+  margin-top: 20px;
   display: flex;
 }
 
@@ -143,7 +144,6 @@ button {
 .reqBtn{
   padding: 10px;
 }
-
 .notePage{
   position: absolute;
   top: 30%;
@@ -169,4 +169,32 @@ button {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/* Dashboard page */
+.dashboard{
+  display: flex;
+  flex-direction: column;
+}
+.profile_content{
+  display: flex;
+  background-color: wheat;
+  justify-content: center;
+  align-items: flex-end;
+}
+.profile_content p:first-child {
+  position: absolute;
+  left: 0;
+}
+.profile{
+  display: flex;
+  flex-direction: column;
+}
+.borrowed{
+  min-height: 200px;
+  background-color: tomato;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

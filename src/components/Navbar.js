@@ -7,6 +7,7 @@ const Navbar = () => {
       <button onClick={() => {navigate("/")}}><p>Home</p></button>
       <button onClick={() => {navigate("/login")}}> <p>Login</p> </button>
       <button onClick={() => {navigate("/signup")}}> <p>Register</p> </button>
+      <button onClick={() => {navigate("/dashboard")}}> <p>Dashboard</p> </button>
       <h1>BorrowLogo</h1>
     </div>
   );

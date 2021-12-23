@@ -5,6 +5,7 @@ import Login from './components/Login'
 import Signup from './components/Register'
 import NewPost from './components/NewPost';
 import Item from './components/Item';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route exact path='/signup' element={<Signup />}/>
         <Route exact path='/add_post' element={<NewPost />}/>
         <Route exact path='/post/:id' element={<Item />}/>
+        <Route exact path='/dashboard' element={<Dashboard />}/>
       </Routes>
     </div>
   );
