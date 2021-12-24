@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { UserContext } from "../UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState("");
+  const {User,setUser} = useContext(UserContext)
+
   const login = async (e) => {
     try {
       e.preventDefault();
@@ -15,14 +18,12 @@ const Login = () => {
         password: e.target.password.value,
       });
       console.log(result.data);
-      // if (result.data.err) {
-      //   setErr(result.data.err);
-      //   // localStorage.setItem("role", result.data.result.role.role);
-      // } else if (result.data.success) {
-      //   console.log("helllllo");
-      //   localStorage.setItem("token", true);
-      //   navigate("/posts");
-      // }
+      if (result.data.err) {
+        setErr(result.data.err);
+        // localStorage.setItem("role", result.data.result.role.role);
+        // localStorage.setItem("token", true);
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }

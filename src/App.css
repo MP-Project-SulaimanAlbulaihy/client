@@ -192,9 +192,16 @@ button {
 }
 .borrowed{
   min-height: 200px;
-  background-color: tomato;
+  background-color: brown;
+  color: white;
   text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+}
+.dashboard_borrowed_items{
+  width: 100%;
+  background-color: wheat;
 }
