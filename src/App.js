@@ -6,14 +6,16 @@ import Signup from "./components/Register";
 import NewPost from "./components/NewPost";
 import Item from "./components/Item";
 import Dashboard from "./components/Dashboard";
-import { UserContext } from "./UserContext";
-import { useState } from "react";
+import { UserContext } from "./Context/UserContext";
+import { useMemo, useState } from "react";
 
 function App() {
   const [User, setUser] = useState(null);
+  const value = useMemo(() => ({User,setUser}), [User,setUser])
+
   return (
     <div className="App">
-      <UserContext.Provider value={{ User, setUser }}>
+      <UserContext.Provider value={value}>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />

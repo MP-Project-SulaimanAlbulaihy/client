@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
+import { UserContext } from "../Context/UserContext";
 const NewPost = ({ props }) => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState("");
   const [progress, setProgress] = useState(0);
   const [images, setImages] = useState([]);
+  const {User,setUser} = useContext(UserContext)
 
   const { state } = useLocation();
 
@@ -27,7 +29,7 @@ const NewPost = ({ props }) => {
           duration: e.target.duration.value,
           status: state ? state : "post",
           img: images,
-        });
+        },{headers: { Authorization: `Bearer ${User.token}` }});
         console.log(result.data);
         navigate('/')
       }

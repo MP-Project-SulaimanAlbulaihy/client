@@ -29,6 +29,9 @@ button {
   background-color: rgba(165, 42, 42, 0);
   font-size: 1.4rem;
 }
+.navbar h1{
+  cursor: pointer;
+}
 
 /* Login Singup */
 .sign_form {
