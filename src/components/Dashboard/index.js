@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
 import Navbar from "../Navbar";
 import AlreadyBorrowed from "./AlreadyBorrowed";
+import MyOffers from "./MyOffers";
 import MyPosts from "./MyPosts";
 import NeighborsRequests from "./NeighborsRequests";
 import WaitingApproval from "./WaitingApproval";
@@ -51,7 +52,7 @@ const Dashboard = () => {
           </div>
           <div className="borrowed">
             <p>إعلانات تم تقديم المساعدة لها</p>
-            {/* <AlreadyBorrowed /> */}
+            <MyOffers />
           </div>
         </div>
       </div>
