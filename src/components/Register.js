@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Map from "./Map";
+import { UserContext } from "../Context/UserContext";
 
 const Register = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const [err, setErr] = useState("");
+  const [err, setErr] = useState([]);
+  const {User,setUser} = useContext(UserContext)
+
   const signup = async (e) => {
     try {
       e.preventDefault();
@@ -17,15 +20,19 @@ const Register = () => {
         password: e.target.password.value,
         location: e.target.location.value,
       });
-      console.log(result.data);
-      // if (result.data.err) {
-      //   setErr(result.data.err);
-      //   // localStorage.setItem("role", result.data.result.role.role);
-      // } else if (result.data.success) {
-      //   console.log("helllllo");
-      //   localStorage.setItem("token", true);
-      //   navigate("/posts");
-      // }
+      if (result.data[0]?.msg) {
+        setErr(result.data);
+      }
+      else if(result.data.password){
+        const login = await axios.post(`${BASE_URL}/login`, {
+          mobileOrUsername: e.target.username.value,
+          password: e.target.password.value,
+        });
+        localStorage.setItem("user_data", JSON.stringify(login.data));
+        setUser(login.data)
+        navigate("/");
+      }
+     
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +40,9 @@ const Register = () => {
 
 
 
-
+useEffect(() => {
+  console.log(err);
+}, [err])
 
   return (
     <div>
@@ -52,7 +61,7 @@ const Register = () => {
           <button type="submit">Sign up</button>
         </form>
 
-        {/* <p>{err}</p> */}
+        {err.map(item=><p>{item.msg}</p>)}
         <button
           onClick={() => {
             navigate("/");

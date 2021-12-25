@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { UserContext } from "../Context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState("");
+  const {User,setUser} = useContext(UserContext)
   const login = async (e) => {
     try {
       e.preventDefault();
@@ -15,19 +17,17 @@ const Login = () => {
         password: e.target.password.value,
       });
       console.log(result.data);
-      // if (result.data.err) {
-      //   setErr(result.data.err);
-      //   // localStorage.setItem("role", result.data.result.role.role);
-      // } else if (result.data.success) {
-      //   console.log("helllllo");
-      //   localStorage.setItem("token", true);
-      //   navigate("/posts");
-      // }
+      if (typeof result.data=='string') {
+        setErr(result.data);
+      }else if(result.data.token){
+        localStorage.setItem("user_data", JSON.stringify(result.data));
+        setUser(result.data)
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
   return (
     <>
       <Navbar />
@@ -41,7 +41,7 @@ const Login = () => {
           <input type="password" name="password" />
           <button type="submit">Login</button>
         </form>
-        {/* <p>{err}</p> */}
+        <p>{err}</p>
         <p
           className="forgot"
           onClick={() => {

@@ -1,3 +1,4 @@
+/* Global */
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +9,9 @@
 button {
   cursor: pointer;
 }
+
+
+/* Navbar */
 .navbar {
   width: 100%;
   background-color: brown;
@@ -17,7 +21,6 @@ button {
   align-items: center;
   color: white;
 }
-
 .navbar button {
   height: 100%;
   width: 130px;
@@ -26,7 +29,11 @@ button {
   background-color: rgba(165, 42, 42, 0);
   font-size: 1.4rem;
 }
+.navbar h1{
+  cursor: pointer;
+}
 
+/* Login Singup */
 .sign_form {
   display: flex;
   flex-direction: column;
@@ -45,8 +52,30 @@ button {
 .sign_form form input {
   margin-bottom: 10px;
 }
-.addpost {
+.marker {
+  font-size: 25px;
+  margin: -28px -16px;
+}
+
+/* Add Post */
+.add_post {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 5% auto;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: brown;
+  min-height: 400px;
+  color: white;
+}
+.add_post form {
   width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.add_post form input {
+  margin-bottom: 10px;
 }
 .upload label {
   background: white;
@@ -54,13 +83,16 @@ button {
   cursor: pointer;
   padding: 7px;
 }
+.progress{
+  margin-top: 10px;
+}
 .imagesPost {
+  margin-top: 20px;
   display: flex;
 }
-.marker {
-  font-size: 25px;
-  margin: -28px -16px;
-}
+
+
+/* Home page */
 .items {
   display: flex;
   flex-direction: column;
@@ -68,13 +100,13 @@ button {
   margin: 0 auto 5% auto;
   align-items: center;
   justify-content: space-evenly;
-  background-color: brown;
-  height: 400px;
+  background-color: #a52a2a;
+  min-height: 300px;
   color: white;
 }
 .items_post {
-  text-align: right;
   border: 1px solid white;
+  text-align: center;
   width: 100%;
   padding: 3px 13px;
   display: flex;
@@ -92,5 +124,87 @@ button {
   padding: 7px;
 }
 .items_post_text{
+  text-align: right;
+  width: 60%;
   cursor: pointer;
+}
+.items_post_status{
+  width: 20%;
+}
+
+/* Item page */
+.item {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 5% auto 5% auto;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #E6F2BE;
+  border-radius: 15px;
+  min-height: 300px;
+}
+.reqBtn{
+  padding: 10px;
+}
+.notePage{
+  position: absolute;
+  top: 30%;
+  left: 25vw;
+  width: 50vw;
+  min-height: 40vh;
+  background-color: #C9D4A7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 14px;
+}
+.notePage button{
+  padding: 15px;
+  width: 120px;
+  margin: 15px auto 0 auto;
+}
+.notePageRest{
+  background-color: #c9d4a75d;
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Dashboard page */
+.dashboard{
+  display: flex;
+  flex-direction: column;
+}
+.profile_content{
+  display: flex;
+  background-color: wheat;
+  justify-content: center;
+  align-items: flex-end;
+}
+.profile_content p:first-child {
+  position: absolute;
+  left: 0;
+}
+.profile{
+  display: flex;
+  flex-direction: column;
+}
+.borrowed{
+  min-height: 200px;
+  background-color: brown;
+  color: white;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+}
+.dashboard_borrowed_items{
+  width: 100%;
+  background-color: wheat;
 }
