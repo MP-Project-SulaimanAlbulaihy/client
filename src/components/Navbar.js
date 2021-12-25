@@ -1,20 +1,46 @@
+import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 const Navbar = () => {
   const navigate = useNavigate();
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const {User,setUser} = useContext(UserContext)
+  
+  const logout = ()=> {
+    localStorage.removeItem('user_data'); 
+    setUser(null)
+  }
+
+  const isTokenExpired = ()=> {
+    try {
+      axios.post(`${BASE_URL}/check_token_expired`, { token:User.token }).then((result) => {
+        if(result.data){
+          logout();
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    if(User==null && localStorage.getItem('user_data')){
+    if(User==null){
       setUser(JSON.parse(localStorage.getItem('user_data')))
     }
   }, [])
-  console.log('user is ',User);
+  useEffect(() => {
+    if(User!==null) isTokenExpired()
+  }, [User])
+
+  
+  // console.log('user is ',User);
   return (
     <div className="navbar">
       {User?
       <>
-        <button onClick={() => {localStorage.removeItem('user_data'); setUser(null)}}> <p>Logout</p> </button>
+        <button onClick={logout}> <p>Logout</p> </button>
+        <button onClick={() => {navigate("/notification")}}> <p>Notification</p> </button>
         <button onClick={() => {navigate("/messages")}}> <p>Messages</p> </button>
         <button onClick={() => {navigate("/favourite")}}> <p>Favourite</p> </button>
         <button onClick={() => {navigate("/dashboard")}}> <p>Dashboard</p> </button>

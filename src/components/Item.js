@@ -53,20 +53,18 @@ const Item = () => {
     e.preventDefault();
     setResBtn(true);
     setReqBtn(false);
-    if (post[0].status == "post") {
-      try {
-        axios
-          .post(
-            `${BASE_URL}/borrow/${post_id}`,
-            { poster_id:post[0].user._id , status: post[0].status, note: e.target.note.value },
-            { headers: { Authorization: `Bearer ${User.token}` } }
-          )
-          .then((result) => {
-            console.log(result.data);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      axios
+        .post(
+          `${BASE_URL}/borrow/${post_id}`,
+          { poster_id: post[0].user._id, status: post[0].status, note: e.target.note.value },
+          { headers: { Authorization: `Bearer ${User.token}` } }
+        )
+        .then((result) => {
+          console.log(result.data);
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -105,14 +103,7 @@ const Item = () => {
               {post[0]?.status == "post" ? (
                 <button type="submit">Request to lend</button>
               ) : (
-                <button
-                  onClick={() => {
-                    setResBtn(true);
-                    setReqBtn(false);
-                  }}
-                >
-                  Offer him
-                </button>
+                <button type="submit">Offer him</button>
               )}
             </div>
           </div>
@@ -124,9 +115,15 @@ const Item = () => {
       {resBtn ? (
         <div className="notePageRest" ref={noteRest}>
           <div className="notePage">
-            <h3>Your request has been recieved</h3>
-            <p>Kinldy wait for owner approval</p>
-            <p>You can check status of request in dashboard page</p>
+            {post[0]?.status == "post" ? (
+              <>
+                <h3>Your request has been recieved</h3>
+                <p>Kinldy wait for owner approval</p>
+                <p>You can check status of request in dashboard page</p>
+              </>
+            ) : (
+              <p>Your mobile and note will be shared with owner to contact you</p>
+            )}
             <button onClick={() => setResBtn(false)}>OK</button>
           </div>
         </div>

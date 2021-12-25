@@ -6,6 +6,7 @@ import Signup from "./components/Register";
 import NewPost from "./components/NewPost";
 import Item from "./components/Item";
 import Dashboard from "./components/Dashboard";
+import Messages from "./components/Messages";
 import { UserContext } from "./Context/UserContext";
 import { useMemo, useState } from "react";
 
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/add_post" element={<NewPost />} />
           <Route exact path="/post/:id" element={<Item />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/messages" element={<Messages />} />
         </Routes>
       </UserContext.Provider>
     </div>
