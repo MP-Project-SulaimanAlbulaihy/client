@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { UserContext } from "../Context/UserContext";
 const Item = () => {
@@ -12,7 +12,8 @@ const Item = () => {
   const [resBtn, setResBtn] = useState(false);
   const noteRest = useRef(null);
   const { User, setUser } = useContext(UserContext);
-
+  const navigate = useNavigate();
+  
   const getPost = () => {
     try {
       axios.get(`${BASE_URL}/post/${post_id}`).then((result) => {
@@ -74,6 +75,7 @@ const Item = () => {
       <div className="item">
         <div className="item_title">
           <h1>Title: {post[0]?.title}</h1>
+          <p>{post[0]?.user.username}</p>
         </div>
         <div className="item_context">
           <h1>Status: {post[0]?.status}</h1>
@@ -86,6 +88,7 @@ const Item = () => {
         <button className="reqBtn">
           {post[0]?.status == "post" ? <p onClick={tryToRequest}>Borrow</p> : <p onClick={tryToRequest}>Offer him</p>}
         </button>
+        <button onClick={()=>navigate('/messages',{state: {to:post[0]?.user._id, username:post[0]?.user.username}})}>Send private message</button>
       </div>
 
       {ReqBtn ? (

@@ -250,4 +250,36 @@ button {
 .chat .input{
   background-color: whitesmoke;
   height: 12%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.chat .input input{
+  width: 98%;
+  height: 80%;
+  border-radius: 15px;
+  padding-left: 15px;
+  margin-left: 10px;
+}
+.chat .input button{
+  height: 80%;
+  width: 20%;
+  margin: 0 10px;
+  border-radius: 15px;
+  color: white;
+  background-color: rgb(0, 79, 250);
+  border: none;
+}
+.chat form{
+  height: 100%;
+}
+.message_history_person{
+  background-color: white;
+  height: 80px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid black;
+  cursor: pointer;
 }
