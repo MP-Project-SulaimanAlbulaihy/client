@@ -10,6 +10,12 @@ const Messages = () => {
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [userHistory, setUserHistory] = useState([]);
+  const [currentTo, setCurrentTo] = useState(null);
+  const [chatHistory, setChatHistory] = useState([]);
+
+  useEffect(() => {
+    console.log(chatHistory[0]);
+  }, [chatHistory]);
 
   const [state, setState] = useState({ message: "", from: "", to: "" });
   const [chat, setChat] = useState([]);
@@ -21,20 +27,25 @@ const Messages = () => {
     socketRef.current = io.connect("http://localhost:5500");
     socketRef.current.on("message", (data) => {
       console.log(data);
-      setChat([...chat, { from: data.from, to: data.to, message: data.message }]);
+      setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
     });
     return () => socketRef.current.disconnect();
   }, [chat]);
 
   const onTextChange = (e) => {
-    setState({ ...state, message: e.target.value, from: User.result.username, to: "61c8a5b73d430f6f780a3e2b" });
+    setState({ ...state, message: e.target.value, from: User.result.username, to: currentTo });
   };
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
     const { from, to, message } = state;
     console.log(state);
-    socketRef.current.emit("message", { from: User.result._id, to: "61c8a5b73d430f6f780a3e2b", message });
+    socketRef.current.emit("message", {
+      from: User.result._id,
+      to: currentTo,
+      message,
+      username: User.result.username,
+    });
     setState({ message: "", from, to });
   };
 
@@ -43,9 +54,10 @@ const Messages = () => {
       axios
         .get(`${BASE_URL}/get_user_history`, { headers: { Authorization: `Bearer ${User.token}` } })
         .then((result) => {
-          console.log(result.data[0]?.userHistory);
+          console.log(result.data);
           if (result.data[0]?.userHistory.length) {
             setUserHistory(result.data[0]?.userHistory);
+            setChatHistory(result.data);
           }
         });
     } catch (error) {
@@ -71,30 +83,24 @@ const Messages = () => {
   };
 
   useEffect(() => {
-    // if (User) getUserHistory();
-    // console.log(userHistory);
+    if (User) getUserHistory();
   }, [User]);
 
   useEffect(() => {
-    getUserHistory();
-    console.log("hhhhhhh", userHistory);
-  }, []);
+    console.log(currentTo, "to");
+  }, [currentTo]);
 
   useEffect(() => {
-    // if(userHistory.length)updateUserHistory();
-    console.log(userHistory);
-
     if (
-      location?.state?.to && Array.isArray(userHistory)
-        ? userHistory.filter((e) => e?.user == location?.state?.to).length == 0
-        : false
+      location?.state?.to &&
+      (Array.isArray(userHistory) ? userHistory?.filter((e) => e._id == location?.state?.to).length == 0 : false) &&
+      User
     ) {
-      console.log("n");
       updateUserHistory();
-      setUserHistory([...userHistory, { user: location.state.to }]);
+      setCurrentTo(location.state.to);
+      getUserHistory();
     }
-  }, [userHistory]);
-
+  }, []);
   return (
     <div>
       <Navbar />
@@ -103,36 +109,59 @@ const Messages = () => {
         <div className="messages">
           <div className="chat">
             <div className="log">
-              <p>بتبيع السياكل؟</p>
-              <p>بتبيع السياzcvxzcvxzxcvxcvxcvvxcكل؟</p>
-              {chat.map(({ from, message }, index) => (
+              {chatHistory[0]?.to.map((item, index) => (
                 <div key={index}>
-                  <p>
-                    {from} :<span>{message}</span>
-                  </p>
+                  {item.to == currentTo ? (
+                    <>
+                      {item.content.map((i, index) => (
+                        <p key={index}>
+                          {chatHistory[0]?.from.username}
+                          <br />
+                          <span>{i}</span>
+                        </p>
+                      ))}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               ))}
+              {chat.map(({ username, message }, index) => (
+                <p key={index}>
+                  {username}
+                  <br />
+                  <span>{message}</span>
+                </p>
+              ))}
             </div>
-            <form onSubmit={onMessageSubmit}>
-              <div className="input">
-                <input
-                  type="text"
-                  name="chat_input"
-                  placeholder="Type message here.."
-                  name="message"
-                  onChange={(e) => onTextChange(e)}
-                  value={state.message}
-                />
-                <button>Send</button>
-              </div>
-            </form>
+            {currentTo ? (
+              <form onSubmit={onMessageSubmit}>
+                <div className="input">
+                  <input
+                    type="text"
+                    name="chat_input"
+                    placeholder="Type message here.."
+                    name="message"
+                    onChange={(e) => onTextChange(e)}
+                    value={state.message}
+                  />
+                  <button>Send</button>
+                </div>
+              </form>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="message_history">
-            {Array.isArray(userHistory)?userHistory?.map((i) => (
-              <div className="message_history_person">
-                <p>{i}</p>
-              </div>
-            )):<></>}
+            {Array.isArray(userHistory) ? (
+              userHistory?.map((i, index) => (
+                <div className="message_history_person" onClick={() => setCurrentTo(i._id)} key={index}>
+                  <p>{i.username}</p>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
