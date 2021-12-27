@@ -10,6 +10,7 @@ const Messages = () => {
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [userHistory, setUserHistory] = useState([]);
+  const [currentTo, setCurrentTo] = useState(null);
 
   const [state, setState] = useState({ message: "", from: "", to: "" });
   const [chat, setChat] = useState([]);
@@ -40,14 +41,12 @@ const Messages = () => {
 
   const getUserHistory = () => {
     try {
-      axios
-        .get(`${BASE_URL}/get_user_history`, { headers: { Authorization: `Bearer ${User.token}` } })
-        .then((result) => {
-          console.log(result.data[0]?.userHistory);
-          if (result.data[0]?.userHistory.length) {
-            setUserHistory(result.data[0]?.userHistory);
-          }
-        });
+      axios.get(`${BASE_URL}/get_user_history`, { headers: { Authorization: `Bearer ${User.token}` } }).then((result) => {
+        console.log(result.data);
+        if (result.data[0]?.userHistory.length) {
+          setUserHistory(result.data[0]?.userHistory);
+        } else setUserHistory([]);
+      });
     } catch (error) {
       console.log(error);
     }
@@ -56,45 +55,35 @@ const Messages = () => {
   const updateUserHistory = () => {
     try {
       console.log(userHistory, "why");
-      axios
-        .post(
-          `${BASE_URL}/update_user_history`,
-          { userHistory: location.state.to },
-          { headers: { Authorization: `Bearer ${User.token}` } }
-        )
-        .then((result) => {
-          console.log(result.data);
-        });
+      axios.post(`${BASE_URL}/update_user_history`, { userHistory: location.state.to }, { headers: { Authorization: `Bearer ${User.token}` } }).then((result) => {
+        console.log(result.data);
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    // if (User) getUserHistory();
-    // console.log(userHistory);
-  }, [User]);
-
-  useEffect(() => {
     getUserHistory();
-    console.log("hhhhhhh", userHistory);
   }, []);
 
   useEffect(() => {
-    // if(userHistory.length)updateUserHistory();
-    console.log(userHistory);
+    console.log(currentTo, "to");
+  }, [currentTo]);
 
-    if (
-      location?.state?.to && Array.isArray(userHistory)
-        ? userHistory.filter((e) => e?.user == location?.state?.to).length == 0
-        : false
-    ) {
-      console.log("n");
-      updateUserHistory();
-      setUserHistory([...userHistory, { user: location.state.to }]);
-    }
+  const [newTo, setnewTo] = useState(false)
+  useEffect(() => {
+    console.log("user history ", userHistory);
+      console.log("Is it true", location?.state?.to, userHistory.filter((e) => e._id == location?.state?.to).length);
+      if (location?.state?.to && (Array.isArray(userHistory) ? userHistory?.filter((e) => e._id == location?.state?.to).length == 0 : false)) {
+        console.log("updaate");
+        updateUserHistory();
+        setCurrentTo(location.state.to);
+        setnewTo(true)
+      } else {
+        if (Array.isArray(userHistory) && userHistory.length > 0) setCurrentTo(userHistory[0]._id);
+      }
   }, [userHistory]);
-
   return (
     <div>
       <Navbar />
@@ -115,24 +104,24 @@ const Messages = () => {
             </div>
             <form onSubmit={onMessageSubmit}>
               <div className="input">
-                <input
-                  type="text"
-                  name="chat_input"
-                  placeholder="Type message here.."
-                  name="message"
-                  onChange={(e) => onTextChange(e)}
-                  value={state.message}
-                />
+                <input type="text" name="chat_input" placeholder="Type message here.." name="message" onChange={(e) => onTextChange(e)} value={state.message} />
                 <button>Send</button>
               </div>
             </form>
           </div>
           <div className="message_history">
-            {Array.isArray(userHistory)?userHistory?.map((i) => (
-              <div className="message_history_person">
-                <p>{i}</p>
-              </div>
-            )):<></>}
+            {Array.isArray(userHistory) ? (
+              userHistory?.map((i) => (
+                <div className="message_history_person" onClick={() => setCurrentTo(i._id)}>
+                  <p>{i.username}</p>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+            {newTo?<div className="message_history_person" onClick={() => setCurrentTo(location.state.to)}>
+                  <p>{location.state.username} cccc</p>
+                </div>:<></>}
           </div>
         </div>
       </div>
