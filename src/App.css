@@ -238,6 +238,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  overflow: auto;
 }
 .chat .log p{
   width: fit-content;
@@ -282,4 +283,24 @@ button {
   padding: 15px;
   border: 1px solid black;
   cursor: pointer;
+}
+
+
+/* Favourite page */
+.favourite_items{
+  min-height: 200px;
+  background-color: brown;
+  color: white;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+}
+.favourite{
+  width: 100%;
+  background-color: wheat;
+  min-height: 100vh;
+  padding-top: 100px;
 }

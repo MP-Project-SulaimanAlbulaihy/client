@@ -13,17 +13,26 @@ const Item = () => {
   const noteRest = useRef(null);
   const { User, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  
+  const [favouriteStatus, setFavouriteStatus] = useState(false);
+
   const getPost = () => {
     try {
       axios.get(`${BASE_URL}/post/${post_id}`).then((result) => {
         console.log(result.data);
         setPost(result.data);
+        for (let i = 0; i < result.data[0]?.favourite.length; i++) {
+          setFavouriteStatus(false);
+          if (result.data[0]?.favourite[i].post == post_id) {
+            setFavouriteStatus(true);
+            break;
+          }
+        }
       });
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getPost();
   }, []);
@@ -69,6 +78,20 @@ const Item = () => {
     }
   };
 
+  const addFavourit = () => {
+    try {
+      axios
+        .get(`${BASE_URL}/favourite/${post[0]._id}`, { headers: { Authorization: `Bearer ${User.token}` } })
+        .then((result) => {
+          console.log(result.data);
+          if (result.data.result == "remove favourite") setFavouriteStatus(false);
+          else if (result.data.result == "added favourite") setFavouriteStatus(true);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -88,7 +111,16 @@ const Item = () => {
         <button className="reqBtn">
           {post[0]?.status == "post" ? <p onClick={tryToRequest}>Borrow</p> : <p onClick={tryToRequest}>Offer him</p>}
         </button>
-        <button onClick={()=>navigate('/messages',{state: {to:post[0]?.user._id, username:post[0]?.user.username}})}>Send private message</button>
+        <button
+          onClick={() => navigate("/messages", { state: { to: post[0]?.user._id, username: post[0]?.user.username } })}
+        >
+          Send private message
+        </button>
+        {!favouriteStatus ? (
+          <button onClick={addFavourit}>add favourite</button>
+        ) : (
+          <button onClick={addFavourit}>remove favourite</button>
+        )}
       </div>
 
       {ReqBtn ? (
