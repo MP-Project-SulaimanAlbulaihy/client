@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
 import { UserContext } from "../Context/UserContext";
-const NewPost = ({ props }) => {
+const NewPost = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState("");
@@ -76,19 +76,19 @@ const NewPost = ({ props }) => {
           <textarea type="text" name="desc" />
           <label htmlFor="category">Category</label>
           <select name="category">
-            <option value="tools">أدوات منزلية</option>
-            <option value="furniture">أثاث</option>
-            <option value="food">مواد غذائية</option>
-            <option value="other">أخرى</option>
+            <option value="أدوات منزلية">أدوات منزلية</option>
+            <option value="أثاث">أثاث</option>
+            <option value="مواد غذائية">مواد غذائية</option>
+            <option value="أخرى">أخرى</option>
           </select>
           <label htmlFor="duration">Duration</label>
           <select name="duration">
-            <option value="1">دقيقة 30</option>
-            <option value="2">ساعة</option>
-            <option value="3">ساعتين</option>
-            <option value="4">يوم</option>
-            <option value="5">يومين</option>
-            <option value="6">تبرع لوجه الله</option>
+            <option value="دقيقة 30">دقيقة 30</option>
+            <option value="ساعة">ساعة</option>
+            <option value="ساعتين">ساعتين</option>
+            <option value="يوم">يوم</option>
+            <option value="يومين">يومين</option>
+            <option value="تبرع لوجه الله">تبرع لوجه الله</option>
           </select>
           <br />
           <div className="upload">
