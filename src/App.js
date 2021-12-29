@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import Messages from "./components/Messages";
 import { UserContext } from "./Context/UserContext";
 import { useMemo, useState } from "react";
+import Favourite from "./components/favourite";
 
 function App() {
   const [User, setUser] = useState(null);
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/post/:id" element={<Item />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/messages" element={<Messages />} />
+          <Route exact path="/favourite" element={<Favourite />} />
         </Routes>
       </UserContext.Provider>
     </div>
