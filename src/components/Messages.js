@@ -19,17 +19,21 @@ const Messages = () => {
 
   const [state, setState] = useState({ message: "", from: "", to: "" });
   const [chat, setChat] = useState([]);
-  const { User, setUser } = useContext(UserContext);
+  const { User } = useContext(UserContext);
 
   const socketRef = useRef();
 
   useEffect(() => {
-    socketRef.current = io.connect("http://localhost:5500");
+      console.log('????????????????????????????');
+      socketRef.current = io.connect("http://localhost:5500");
+  }, [socketRef])
+
+  useEffect(() => {
     socketRef.current.on("message", (data) => {
       console.log(data);
       setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
     });
-    return () => socketRef.current.disconnect();
+    // return () => socketRef.current.disconnect();
   }, [chat]);
 
   const onTextChange = (e) => {
