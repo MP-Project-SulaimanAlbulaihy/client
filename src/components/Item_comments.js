@@ -10,8 +10,8 @@ const Item_comments = (props) => {
 
   const sendComment = async (e) => {
     e.preventDefault();
+    if (User) {
     try {
-      if (User) {
         const result = await axios.post(
           `${BASE_URL}/new_comment/${props.postId}`,
           {
@@ -21,11 +21,13 @@ const Item_comments = (props) => {
         );
         console.log(result.data);
         getComments();
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
+      e.target.comment.value = "";
+    }else {
+      alert('Log in first..')
     }
-    e.target.comment.value = "";
   };
 
   const getComments = async () => {

@@ -9,6 +9,7 @@ const Register = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [err, setErr] = useState([]);
+  const [pulledMark, setPulledMark] = useState([]);
   const {User,setUser} = useContext(UserContext)
 
   const signup = async (e) => {
@@ -38,11 +39,11 @@ const Register = () => {
     }
   };
 
-
+  const pull_mark = (data) => setPulledMark(data);
 
 useEffect(() => {
-  console.log(err);
-}, [err])
+  console.log(pulledMark.lat);
+}, [pulledMark])
 
   return (
     <div>
@@ -57,7 +58,7 @@ useEffect(() => {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" />
           <label htmlFor="location">Location</label>
-          <input type="text" name="location" />
+          <input type="text" name="location" value={pulledMark.lat+','+pulledMark.lng}/>
           <button type="submit">Sign up</button>
         </form>
 
@@ -71,7 +72,7 @@ useEffect(() => {
         </button>
       </div>
 
-      <Map />
+      <Map mark={pull_mark}/>
       
       <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>
     </div>

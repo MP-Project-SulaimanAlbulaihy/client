@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 
-const Map = () => {
+const Map = (props) => {
   const [mark, setmark] = useState([]);
   let [uerLocation, setUerLocation] = useState([]);
   const [zoom, setZoom] = useState(8);
@@ -73,6 +73,7 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
+    props.mark(mark);
     window.scrollTo(0, scrollPosition);
     setUerLocation({
       latMax: mark.lat + 0.0006,
