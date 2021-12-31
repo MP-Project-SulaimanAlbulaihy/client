@@ -24,14 +24,13 @@ const Messages = () => {
   const socketRef = useRef();
 
   useEffect(() => {
-      console.log('????????????????????????????');
-      socketRef.current = io.connect("http://localhost:5500");
-  }, [socketRef])
+    socketRef.current = io.connect("http://localhost:5500");
+  }, [socketRef]);
 
   useEffect(() => {
-    socketRef.current.on("message", (data) => {
+    socketRef.current.on("receive_message", (data) => {
       console.log(data);
-      setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
+      //   setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
     });
     // return () => socketRef.current.disconnect();
   }, [chat]);
@@ -44,7 +43,7 @@ const Messages = () => {
     e.preventDefault();
     const { from, to, message } = state;
     console.log(state);
-    socketRef.current.emit("message", {
+    socketRef.current.emit("send_message", {
       from: User.result._id,
       to: currentTo,
       message,
@@ -105,6 +104,15 @@ const Messages = () => {
       getUserHistory();
     }
   }, []);
+
+  const connectRoom = (i) => {
+      setCurrentTo(i._id);
+      if (currentTo) {
+        console.log(i._id);
+      socketRef.current.emit("joined", { from: User.result._id, to: currentTo });
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -159,7 +167,11 @@ const Messages = () => {
           <div className="message_history">
             {Array.isArray(userHistory) ? (
               userHistory?.map((i, index) => (
-                <div className="message_history_person" onClick={() => setCurrentTo(i._id)} key={index}>
+                <div
+                  className="message_history_person"
+                  onClick={() => connectRoom(i) }
+                  key={index}
+                >
                   <p>{i.username}</p>
                 </div>
               ))
