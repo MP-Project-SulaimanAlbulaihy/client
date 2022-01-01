@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
-import Navbar from "../Navbar";
 import AlreadyBorrowed from "./AlreadyBorrowed";
 import MyOffers from "./MyOffers";
 import MyPosts from "./MyPosts";
@@ -68,7 +67,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="dashboard">
         <div className="profile_content">
           {/* <p>

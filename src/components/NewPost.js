@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
 import { UserContext } from "../Context/UserContext";
@@ -11,7 +10,7 @@ const NewPost = () => {
   const [err, setErr] = useState("");
   const [progress, setProgress] = useState(0);
   const [images, setImages] = useState([]);
-  const {User,setUser} = useContext(UserContext)
+  const { User, setUser } = useContext(UserContext);
 
   const { state } = useLocation();
 
@@ -22,16 +21,20 @@ const NewPost = () => {
         setErr("Kindly fill all the inputs");
       } else {
         setErr("");
-        const result = await axios.post(`${BASE_URL}/post`, {
-          title: e.target.title.value,
-          desc: e.target.desc.value,
-          category: e.target.category.value,
-          duration: e.target.duration.value,
-          status: state ? state : "post",
-          img: images,
-        },{headers: { Authorization: `Bearer ${User.token}` }});
+        const result = await axios.post(
+          `${BASE_URL}/post`,
+          {
+            title: e.target.title.value,
+            desc: e.target.desc.value,
+            category: e.target.category.value,
+            duration: e.target.duration.value,
+            status: state ? state : "post",
+            img: images,
+          },
+          { headers: { Authorization: `Bearer ${User.token}` } }
+        );
         console.log(result.data);
-        navigate('/')
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -66,22 +69,21 @@ const NewPost = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="add_post">
-        {state == "request" ? <h1>Request Item</h1> : <h1>Add Post</h1>}
+      <div className="add_post" dir="rtl">
+        {state == "request" ? <h1>طلب استعارة</h1> : <h1>إضافة سلعة</h1>}
         <form onSubmit={add_new_post} className="addpost_form">
-          <label htmlFor="title">Title</label>
-          <input type="text" name="title" />
-          <label htmlFor="desc">Description</label>
-          <textarea type="text" name="desc" />
-          <label htmlFor="category">Category</label>
+          <label htmlFor="title">عنوان السلعة</label>
+          <input type="text" name="title" required />
+          <label htmlFor="desc">الوصف</label>
+          <textarea type="text" name="desc" required />
+          <label htmlFor="category">تصنيف الطلب</label>
           <select name="category">
             <option value="أدوات منزلية">أدوات منزلية</option>
             <option value="أثاث">أثاث</option>
             <option value="مواد غذائية">مواد غذائية</option>
             <option value="أخرى">أخرى</option>
           </select>
-          <label htmlFor="duration">Duration</label>
+          <label htmlFor="duration">مدة الإستعارة</label>
           <select name="duration">
             <option value="دقيقة 30">دقيقة 30</option>
             <option value="ساعة">ساعة</option>
@@ -101,8 +103,12 @@ const NewPost = () => {
               id="img"
               style={{ display: "none" }}
             />
-            <label htmlFor="img">Upload Images</label>
-            {!(progress == 0) ? <div className="progress"><p>Uploading {progress}%</p></div> : null}
+            <label htmlFor="img">تحميل صور</label>
+            {!(progress == 0) ? (
+              <div className="progress">
+                <p>Uploading {progress}%</p>
+              </div>
+            ) : null}
           </div>
           <div className="imagesPost">
             {images?.map((image) => (
@@ -110,17 +116,19 @@ const NewPost = () => {
             ))}
           </div>
           <br />
-          {state == "request" ? <button type="submit">Request Item</button> : <button type="submit">Add Post</button>}
+          <p>{err}</p>
+          <div className="add_form_btns">
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/posts");
+              }}
+            >
+              تراجع
+            </button>
+            {state == "request" ? <button type="submit" id="add_btn_page">طلب السلعة</button> : <button type="submit" id="add_btn_page">عرض السلعة</button>}
+          </div>
         </form>
-        <p>{err}</p>
-
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Back
-        </button>
       </div>
     </>
   );

@@ -39,17 +39,22 @@ const Navbar = () => {
     <div className="navbar">
       {User?
       <>
-        <button onClick={logout}> <p>Logout</p> </button>
-        <button onClick={() => {navigate("/notification")}}> <p>Notification</p> </button>
-        <button onClick={() => {navigate("/messages")}}> <p>Messages</p> </button>
-        <button onClick={() => {navigate("/favourite")}}> <p>Favourite</p> </button>
-        <button onClick={() => {navigate("/dashboard")}}> <p>Dashboard</p> </button>
+        <div>
+          <button onClick={logout}> <p>خروج</p> </button>
+          <button onClick={() => {navigate("/notification")}}> <p>🔔الاشعارات</p> </button>
+        </div>
+        <div>
+            <button onClick={() => {navigate("/messages")}}> <p>الرسائل</p> </button>
+            <button onClick={() => {navigate("/favourite")}}> <p>مفضلتي</p> </button>
+            <button onClick={() => {navigate("/dashboard")}}> <p>ملفي الشخصي</p> </button>
+            <button onClick={() => {navigate("/posts")}}> <p>الطلبات</p> </button>
+        </div>
       </>:
-      <>
-        <button onClick={() => {navigate("/login")}}> <p>Login</p> </button>
-        <button onClick={() => {navigate("/signup")}}> <p>Register</p> </button>
-      </>}
-      <h1 onClick={() => {navigate("/")}}>BorrowLogo</h1>
+          <div>
+            <button onClick={() => {navigate("/login")}}> <p>دخول</p> </button>
+            <button onClick={() => {navigate("/signup")}}> <p>تسجيل جديد</p> </button>
+          </div>}
+      <div onClick={() => {navigate("/")}}><img src="https://i.ibb.co/HXCzxGP/Screenshot-2022-01-01-052203.png" /></div>
     </div>
   );
 };

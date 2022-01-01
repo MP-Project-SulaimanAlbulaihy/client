@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Navbar from "./Navbar";
 import io from "socket.io-client";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
@@ -11,11 +10,8 @@ const Messages = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [userHistory, setUserHistory] = useState([]);
   const [currentTo, setCurrentTo] = useState(null);
-  const [chatHistory, setChatHistory] = useState([]);
+  const [getuserchat, setGetuserchat] = useState([]);
 
-  useEffect(() => {
-    console.log(chatHistory[0]);
-  }, [chatHistory]);
 
   const [state, setState] = useState({ message: "", from: "", to: "" });
   const [chat, setChat] = useState([]);
@@ -28,12 +24,13 @@ const Messages = () => {
   }, [socketRef]);
 
   useEffect(() => {
-    socketRef.current.on("receive_message", (data) => {
-      console.log(data);
-      //   setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
+    socketRef.current.on("message", (data) => {
+      console.log("ttttttttttttttttttttt", User?.result?._id);
+      if (data.to == User?.result?._id && User)
+        setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
     });
     // return () => socketRef.current.disconnect();
-  }, [chat]);
+  }, [chat, User]);
 
   const onTextChange = (e) => {
     setState({ ...state, message: e.target.value, from: User.result.username, to: currentTo });
@@ -43,13 +40,27 @@ const Messages = () => {
     e.preventDefault();
     const { from, to, message } = state;
     console.log(state);
-    socketRef.current.emit("send_message", {
+    socketRef.current.emit("message", {
       from: User.result._id,
       to: currentTo,
       message,
       username: User.result.username,
     });
+    setChat([...chat, { from: User.result._id, to: currentTo, message, username: User.result.username }]);
     setState({ message: "", from, to });
+  };
+
+  const getChats = () => {
+    try {
+      axios.get(`${BASE_URL}/get_chat`, { headers: { Authorization: `Bearer ${User.token}` } }).then((result) => {
+        console.log(result.data);
+        if (result.data) {
+          setGetuserchat(result.data);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getUserHistory = () => {
@@ -60,7 +71,6 @@ const Messages = () => {
           console.log(result.data);
           if (result.data[0]?.userHistory.length) {
             setUserHistory(result.data[0]?.userHistory);
-            setChatHistory(result.data);
           }
         });
     } catch (error) {
@@ -70,15 +80,15 @@ const Messages = () => {
 
   const updateUserHistory = () => {
     try {
-      console.log(userHistory, "why");
       axios
         .post(
           `${BASE_URL}/update_user_history`,
-          { userHistory: location.state.to },
+          { newUser: location.state.to },
           { headers: { Authorization: `Bearer ${User.token}` } }
         )
         .then((result) => {
           console.log(result.data);
+          getUserHistory();
         });
     } catch (error) {
       console.log(error);
@@ -86,7 +96,10 @@ const Messages = () => {
   };
 
   useEffect(() => {
-    if (User) getUserHistory();
+    if (User) {
+      getChats();
+      getUserHistory();
+    }
   }, [User]);
 
   useEffect(() => {
@@ -106,28 +119,27 @@ const Messages = () => {
   }, []);
 
   const connectRoom = (i) => {
-      setCurrentTo(i._id);
-      if (currentTo) {
-        console.log(i._id);
+    setCurrentTo(i._id);
+    if (currentTo) {
+      console.log(i._id);
       socketRef.current.emit("joined", { from: User.result._id, to: currentTo });
     }
   };
 
   return (
     <div>
-      <Navbar />
       <div className="messages_component">
         <h1 className="subject">الرسائل</h1>
         <div className="messages">
           <div className="chat">
             <div className="log">
-              {chatHistory[0]?.to.map((item, index) => (
+              {getuserchat?.map((item, index) => (
                 <div key={index}>
-                  {item.to == currentTo ? (
+                  {(item.to == currentTo)||(item.from==currentTo) ? (
                     <>
                       {item.content.map((i, index) => (
                         <p key={index}>
-                          {chatHistory[0]?.from.username}
+                            <span>{item.username}</span>
                           <br />
                           <span>{i}</span>
                         </p>
@@ -167,11 +179,7 @@ const Messages = () => {
           <div className="message_history">
             {Array.isArray(userHistory) ? (
               userHistory?.map((i, index) => (
-                <div
-                  className="message_history_person"
-                  onClick={() => connectRoom(i) }
-                  key={index}
-                >
+                <div className="message_history_person" onClick={() => connectRoom(i)} key={index}>
                   <p>{i.username}</p>
                 </div>
               ))

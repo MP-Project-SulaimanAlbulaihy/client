@@ -10,16 +10,30 @@ import Messages from "./components/Messages";
 import { UserContext } from "./Context/UserContext";
 import { useMemo, useState } from "react";
 import Favourite from "./components/favourite";
+import LandingPage from "./components/LandingPage";
+import Navbar from "./components/Navbar";
 
 function App() {
+  const [wizard, setWizard] = useState('');
   const [User, setUser] = useState(null);
-  const value = useMemo(() => ({User,setUser}), [User,setUser])
+  const value = useMemo(() => ({ User, setUser }), [User, setUser]);
 
   return (
     <div className="App">
+      <video autoPlay muted loop id="myVideo">
+        <source src="https://giant.gfycat.com/DeafeningEqualConch.mp4" type="video/mp4" />
+      </video>
+      <div className={`wizard_container ${wizard}`}>
+        <div className="wizard">
+          <img src="https://i.ibb.co/71WXQyJ/c1c76764cc32bb0411236fa171279134.jpg" alt="wizard" />
+          <span onClick={() => setWizard('hide')}>✘</span>
+        </div>
+      </div>
       <UserContext.Provider value={value}>
+        <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<LandingPage />} />
+          <Route exact path="/posts" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/add_post" element={<NewPost />} />

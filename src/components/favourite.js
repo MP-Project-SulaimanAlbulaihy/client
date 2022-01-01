@@ -1,5 +1,4 @@
 import { UserContext } from "../Context/UserContext";
-import Navbar from "./Navbar";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +28,6 @@ const Favourite = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="favourite">
         <div className="favourite_items">
           {posts.length ? (
