@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 
-const Map = () => {
+const Map = (props) => {
   const [mark, setmark] = useState([]);
-  let [uerLocation, setUerLocation] = useState([]);
-  const [zoom, setZoom] = useState(8);
+  const [zoom, setZoom] = useState(11);
   const [scrollPosition, setscrollPosition] = useState(0); //could be not used later on
 
   function getLocation() {
@@ -73,19 +72,14 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
+    props.mark(mark);
     window.scrollTo(0, scrollPosition);
-    setUerLocation({
-      latMax: mark.lat + 0.0006,
-      latMin: mark.lat - 0.0006,
-      lngMax: mark.lng + 0.0006,
-      lngMin: mark.lng - 0.0006,
-    });
   }, [mark]);
 
   return (
-    <div>
+    <div className="real_map">
       {!isRefreshingMap && (
-        <div style={{ height: "50vh", width: "40%", margin: "0 auto" }}>
+        <div style={{ height: "50vh", width: "100%"}}>
           <GoogleMapReact
             onClick={doubleClick}
             bootstrapURLKeys={{ key: "AIzaSyC84xwatWNrBJcYq8W1Kn723iYd3-_UpDY" }}

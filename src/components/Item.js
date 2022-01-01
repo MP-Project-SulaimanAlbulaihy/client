@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
 import { UserContext } from "../Context/UserContext";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
 import { storage } from "../firebase";
 import Item_comments from "./Item_comments";
+import Footer from "./Footer";
 
 const Item = () => {
   const { pathname } = useLocation();
@@ -168,47 +168,80 @@ const Item = () => {
   }, [User, post]);
   return (
     <div>
-      <Navbar />
-      <div className="item">
+      <div className="item" dir="rtl">
         <div className="item_title">
-          <h1>Title: {post[0]?.title}</h1>
-          <p>{post[0]?.user.username}</p>
-          {userRole == "admin" || userRole == "same_user" ? <button onClick={() => setEdit(true)}>Edit</button> : <></>}
+          <h1>العنوان: {post[0]?.title}</h1>
+          <p>المعلن: {post[0]?.user.username}</p>
+          {userRole == "admin" || userRole == "same_user" ? (
+            <button onClick={() => setEdit(true)}>
+              <p>
+                تعديل{" "}
+                <i class="far fa-edit">
+                  <p></p>
+                </i>
+              </p>
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="item_context">
-          <h1>Status: {post[0]?.status}</h1>
-          <p>Description: {post[0]?.desc}</p>
-          <p>Duration {post[0]?.duration}</p>
-          <p>Category {post[0]?.category}</p>
-          {post[0]?.img.map((i) => (
-            <img src={i} alt="" width="200px" />
-          ))}
-          <p>created at {post[0]?.createdAt.slice(0, 10)}</p>
+          {post[0]?.status == "post" ? (
+            <p>
+              <b>عرض سلعة</b>
+            </p>
+          ) : (
+            <p>
+              <b>طلب إستعارة</b>
+            </p>
+          )}
+          <p>{post[0]?.desc}</p>
+          <p>مدة الاستعارة: {post[0]?.duration}</p>
+          <p>التصنيف: {post[0]?.category}</p>
+          <p>
+            انشئ في {post[0]?.createdAt.slice(0, 10)} {post[0]?.createdAt.slice(11, 16)}
+          </p>
+          <div className="item_images">
+            {post[0]?.img.map((i) => (
+              <img src={i} alt="" width="200px" />
+            ))}
+          </div>
         </div>
-        {userRole != "same_user" ? (
-          <>
-        <button className="reqBtn">
-          {post[0]?.status == "post" ? <p onClick={tryToRequest}>Borrow</p> : <p onClick={tryToRequest}>Offer him</p>}
-        </button>
-        
-            <button
-              onClick={() =>
-                navigate("/messages", { state: { to: post[0]?.user._id, username: post[0]?.user.username } })
-              }
-            >
-              Send private message
-            </button>
-          </>
-        ) : (
-          <></>
-        )}
+        <div className="item_btns" dir="ltr">
+          {userRole != "same_user" ? (
+            <>
+              <button id="reqBtn">
+                {post[0]?.status == "post" ? (
+                  <p onClick={tryToRequest}>طلب استعارة</p>
+                ) : (
+                  <p onClick={tryToRequest}>تقديم مساعدة</p>
+                )}
+              </button>
 
-        {console.log(userRole)}
-        {!favouriteStatus ? (
-          <button onClick={addFavourit}>add favourite</button>
-        ) : (
-          <button onClick={addFavourit}>remove favourite</button>
-        )}
+              <button
+                id="chBtn"
+                onClick={() =>
+                  navigate("/messages", { state: { to: post[0]?.user._id, username: post[0]?.user.username } })
+                }
+              >
+                رسالة خاصة
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
+          {!favouriteStatus ? (
+            <button onClick={addFavourit}>
+              <i class="far fa-star"></i>
+              تفضيل
+            </button>
+          ) : (
+            <button onClick={addFavourit}>
+               <i class="fas fa-star"></i> 
+              
+            </button>
+          )}
+        </div>
       </div>
 
       {ReqBtn ? (
@@ -332,6 +365,7 @@ const Item = () => {
         <></>
       )}
       <Item_comments postId={post_id} />
+      <Footer />
     </div>
   );
 };

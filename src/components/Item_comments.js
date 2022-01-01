@@ -10,8 +10,8 @@ const Item_comments = (props) => {
 
   const sendComment = async (e) => {
     e.preventDefault();
+    if (User) {
     try {
-      if (User) {
         const result = await axios.post(
           `${BASE_URL}/new_comment/${props.postId}`,
           {
@@ -21,11 +21,13 @@ const Item_comments = (props) => {
         );
         console.log(result.data);
         getComments();
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
+      e.target.comment.value = "";
+    }else {
+      alert('Log in first..')
     }
-    e.target.comment.value = "";
   };
 
   const getComments = async () => {
@@ -77,48 +79,47 @@ const Item_comments = (props) => {
     <div>
       <form className="comments_form" onSubmit={sendComment}>
         <div className="commentHead">
-          <h3>New Comment</h3>
-          <button type="submit">Submit</button>
+          <h3>إضافة تعليق</h3>
+          <button type="submit" className="submit_comment_btn">إرسال</button>
         </div>
         <div className="commentTail">
-          <img src="https://proplayers.eu/media/cache/avatar_profile/avatars/024027-20210517185321.jpeg" alt="" />
-          <textarea name="comment" placeholder="Your message" required cols="55" rows="8"></textarea>
+          <img src="https://www.nicepng.com/png/full/522-5226533_get-beyond-the-usual-suspects-profile-pic-icon.png" alt="" />
+          <textarea dir="rtl" name="comment" placeholder="محتوى التعليق" required cols="55" rows="8"></textarea>
         </div>
         <div className="numComment">
-          <h3>{noComment} Comments</h3>
+          <h3 dir="rtl">{noComment} تعليق</h3>
         </div>
         {commments
           ?.map((comment, index) => {
             return (
-              <div className="realComment" key={index}>
+              <div className="realComment"  dir="rtl" key={index}>
                 <hr />
                 <div className="realcommentRow">
-                  <img
-                    src="https://proplayers.eu/media/cache/avatar_profile/avatars/024027-20210517185321.jpeg"
+                <div className="flex_inline"><img
+                    src="https://www.nicepng.com/png/full/522-5226533_get-beyond-the-usual-suspects-profile-pic-icon.png"
                     alt=""
                   />
                   <div className="realcommentData">
                     <h3>{comment.user.username}</h3>
                     <p>{comment.comment}</p>
                     <p className="dateP">
-                      {comment.createdAt.slice(0, 10)}
-                      {comment.createdAt.slice(11, 16)}
+                      {comment.createdAt.slice(0, 10)}  {comment.createdAt.slice(11, 16)}
                     </p>
-                  </div>
-                  {comment.user._id == User?.result?._id ? (
+                  </div></div>
+                  <div className="flex_inline">{comment.user._id == User?.result?._id ? (
                     <p className="del" onClick={() => DeleteComment(comment._id)}>
-                      ❌
+                      <i class="far fa-trash-alt"></i>
                     </p>
                   ) : (
                     <></>
                   )}
                   {comment.user._id == User?.result?._id ? (
                     <p className="del" onClick={() => UpdateComment(comment._id)}>
-                      🖊️
+                      <i class="far fa-edit"></i>
                     </p>
                   ) : (
                     <></>
-                  )}
+                  )}</div>
                 </div>
               </div>
             );
