@@ -158,6 +158,7 @@ const Messages = () => {
                 </p>
               ))}
             </div>
+            {userHistory?.length<=0?<h1 id="no_chat_history">لا يوجد محادثات مسبقة</h1>:<></>}
             {currentTo ? (
               <form onSubmit={onMessageSubmit}>
                 <div className="input">

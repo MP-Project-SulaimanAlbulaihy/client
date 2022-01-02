@@ -49,7 +49,7 @@ const Items = () => {
                       <p dir="rtl">أنشأَ في {item.createdAt.slice(0, 10)} {item.createdAt.slice(11,16)}</p>
                     </div>
                     <div className="items_post_status">
-                     {item.status=="post"?<h2>عرض للأستعارة</h2>:<h2>طلب أستعارة</h2>}
+                     {item.status=="post"?<h2 id="post_item_h2">عرض للإستعارة</h2>:<h2 id="request_item_h2">طلب إستعارة</h2>}
                     </div>
                   </div>
                 ) : (

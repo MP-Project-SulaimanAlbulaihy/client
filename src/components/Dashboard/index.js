@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import Footer from "../Footer";
 import AlreadyBorrowed from "./AlreadyBorrowed";
 import MyOffers from "./MyOffers";
 import MyPosts from "./MyPosts";
@@ -39,7 +40,7 @@ const Dashboard = () => {
         },
         { headers: { Authorization: `Bearer ${User.token}` } }
       );
-      if (result.data=='user info updated') {
+      if (result.data == "user info updated") {
         setEdit_profile(false);
         getUser();
       }
@@ -53,7 +54,7 @@ const Dashboard = () => {
     try {
       const result = await axios.get(`${BASE_URL}/get_user`, { headers: { Authorization: `Bearer ${User.token}` } });
       if (result.data) {
-          setCurrentUser(result.data)
+        setCurrentUser(result.data);
         console.log(result.data);
       }
     } catch (error) {
@@ -62,7 +63,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if(User)getUser();
+    if (User) getUser();
   }, [User]);
 
   return (
@@ -74,17 +75,38 @@ const Dashboard = () => {
             <br />
             rating
           </p> */}
-          <button onClick={() => setEdit_profile(true)}>Edit profile</button>
           <div className="profile">
             <img
-              src="https://rapidapi.com/cdn/images?url=https://rapidapi-prod-apis.s3.amazonaws.com/479bb0d4-f442-4c61-8483-a4fc2abb1e88.png"
+              src="https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Image-Transparent-Background.png"
               alt="profile imag"
               width="200px"
               height="200px"
             />
-            <p>Username: {CurrentUser?.username}</p>
-            <p>Mobile Number {CurrentUser?.mobile}</p>
-            <p>My location: {CurrentUser?.location}</p>
+            <p>{CurrentUser?.username}</p>
+          </div>
+          <div className="profile_info" dir="rtl">
+            <div>
+              <p>
+                <b>اسم الحساب</b>
+              </p>
+              <p>{CurrentUser?.username}</p>
+            </div>
+            <hr />
+            <div>
+              <p>
+                <b>رقم الجوال</b>
+              </p>
+              <p>{CurrentUser?.mobile}</p>
+            </div>
+            <hr />
+            <div>
+              <p>
+                <b>موقع البيت</b>
+              </p>
+              <p>{CurrentUser?.location}</p>
+            </div>
+
+            <button onClick={() => setEdit_profile(true)}>تعديل على بيانات الحساب</button>
           </div>
         </div>
         <div className="dashboard_borrowed_items">
@@ -112,42 +134,43 @@ const Dashboard = () => {
       </div>
 
       {edit_profile ? (
-        <>
-          <form onSubmit={update_profile}>
+        <div>
+          <form onSubmit={update_profile} dir="rtl">
             <div className="notePageRest" ref={noteRest}>
-              <div className="edit">
+              <div className="edit edit_form">
                 <div>
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="username">الاسم الشخصي</label>
                   <input type="text" name="username" defaultValue={User?.result?.username} />
                   <br />
-                  <label htmlFor="mobile">Mobile number</label>
+                  <label htmlFor="mobile">رقم الجوال</label>
                   <input type="text" name="mobile" defaultValue={User?.result?.mobile} />
                   <br />
-                  <label htmlFor="password">Password</label>
-                  <input type="password" name="password" placeholder="new password?" />
+                  <label htmlFor="password">الرقم السري</label>
+                  <input type="password" name="password" placeholder="رقم سري جديد؟" />
                   <br />
-                  <label htmlFor="location">Location</label>
+                  <label htmlFor="location">الموقع الجغرافي</label>
                   <input type="text" name="location" defaultValue={User?.result?.location} />
-                  <button>Change Location</button>
-                  <br />
+                  <button type="button">تغيير الموقع</button>
                   {err ? <p>err</p> : <></>}
-                  <button type="submit">Edit</button>
-                  <button
-                    onClick={() => {
-                      setEdit_profile(false);
-                      //   getPost();
-                    }}
-                  >
-                    Cancel
-                  </button>
+                  <div id="iii">
+                    <button  id="back_note_page"
+                      onClick={() => {
+                        setEdit_profile(false);
+                      }}
+                    >
+                      الغاء
+                    </button>
+                    <button type="submit">حفظ التعديلات</button>
+                  </div>
                 </div>
               </div>
             </div>
           </form>
-        </>
+        </div>
       ) : (
         <></>
       )}
+      <Footer />
     </div>
   );
 };

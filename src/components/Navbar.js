@@ -1,12 +1,13 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [showNotification, setshowNotification] = useState(false)
   const {User,setUser} = useContext(UserContext)
-  
+
   const logout = ()=> {
     localStorage.removeItem('user_data'); 
     setUser(null)
@@ -37,11 +38,16 @@ const Navbar = () => {
   // console.log('user is ',User);
   return (
     <div className="navbar">
+      
+      {showNotification?<div className="noti">
+        <p>لا يوجد اشعارات</p>
+      </div>:null}
+
       {User?
       <>
         <div>
           <button onClick={logout}> <p>خروج</p> </button>
-          <button onClick={() => {navigate("/notification")}}> <p>🔔الاشعارات</p> </button>
+          <button onClick={() => {navigate("/notification")}} onMouseOver={()=>{setshowNotification(true)}} onMouseOut={()=>{setshowNotification(false)}}> <p><i class="far fa-bell"></i> الاشعارات</p> </button>
         </div>
         <div>
             <button onClick={() => {navigate("/messages")}}> <p>الرسائل</p> </button>
