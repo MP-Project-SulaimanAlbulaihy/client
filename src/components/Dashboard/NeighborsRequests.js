@@ -45,7 +45,7 @@ const NeighborsRequests = () => {
   }, [User]);
 
   return (
-    <div>
+    <div className="item_full">
       {posts.length ? (
         posts
           .map((item) => {
@@ -63,18 +63,18 @@ const NeighborsRequests = () => {
                   alt=""
                   onClick={() => navigate(`/post/${item.post._id}`)}
                 />
-                  <button onClick={()=>accept(item)}>Accept</button>
-                  <p>Note {item.note}</p>
+                  <button onClick={()=>accept(item)} className="acceptBtn">قبول الطلب</button>
+                  <p>ملاحظة: {item.note}</p>
                 <div className="items_post_text">
                   <h2 onClick={() => navigate(`/post/${item.post._id}`)}>{item.post.title}</h2>
-                  <p>created at {item.post.createdAt.slice(0, 10)}</p>
+                  <p>أنشأ في {item.post.createdAt.slice(0, 10)}</p>
                 </div>
               </div>
             );
           })
           .reverse()
       ) : (
-        <h1>Nothing yet.</h1>
+        <h1>لا يوجد أي طلبات</h1>
       )}
     </div>
   );

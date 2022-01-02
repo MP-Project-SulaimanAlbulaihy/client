@@ -106,7 +106,7 @@ const NewPost = () => {
             <label htmlFor="img">تحميل صور</label>
             {!(progress == 0) ? (
               <div className="progress">
-                <p>Uploading {progress}%</p>
+                <p>يتم الرفع {progress}%</p>
               </div>
             ) : null}
           </div>

@@ -27,9 +27,9 @@ const Favourite = () => {
   }, [User]);
 
   return (
-    <div>
+    <div className="fav_component">
       <div className="favourite">
-        <div className="favourite_items">
+        <div className="borrowed">
           {posts.length ? (
             posts
               .map((item) => {
@@ -47,18 +47,18 @@ const Favourite = () => {
                       onClick={() => navigate(`/post/${item.post._id}`)}
                     />
                     <div className="items_post_status">
-                      <h2>{item.post.status} :الحاله</h2>
+                      <h2>نوع الطلب <br/>{item.post.status=='post'?<>عرض سلعة</>:<>طلب إستعارة</>}</h2>
                     </div>
                     <div className="items_post_text">
                       <h2 onClick={() => navigate(`/post/${item.post._id}`)}>{item.post.title}</h2>
-                      <p>created at {item.post.createdAt.slice(0, 10)}</p>
+                      <p>أنشأ في {item.post.createdAt.slice(0, 10)}</p>
                     </div>
                   </div>
                 );
               })
               .reverse()
           ) : (
-            <h1>Nothing yet.</h1>
+            <h1>لا يوجد تفضيل إلى الان</h1>
           )}
         </div>
       </div>

@@ -29,7 +29,7 @@ const MyPosts = () => {
   }, [User]);
 
   return (
-    <div>
+    <div className="item_full">
       {posts.length ? (
         posts
           .map((item) => {
@@ -37,11 +37,11 @@ const MyPosts = () => {
               <div key={item._id} className="items_post">
                 <img src={item.img[0]?item.img[0]:'https://rapidapi.com/cdn/images?url=https://rapidapi-prod-apis.s3.amazonaws.com/479bb0d4-f442-4c61-8483-a4fc2abb1e88.png'} wdith="90" height="90" alt="" onClick={() => navigate(`/post/${item._id}`)}/>
                 <div className="items_post_status">
-                  <h2>{item.status} :الحاله</h2>
+                  <h2> الحاله: {item.status=='post'?<>عرض سلعة</>:<>طلب استعارة</>}</h2>
                 </div>
                 <div className="items_post_text">
                   <h2 onClick={() => navigate(`/post/${item._id}`)}>{item.title}</h2>
-                  <p>created at {item.createdAt.slice(0, 10)}</p>
+                  <p>أنشأ في {item.createdAt.slice(0, 10)}</p>
                 </div>
 
               </div>
@@ -49,7 +49,7 @@ const MyPosts = () => {
           })
           .reverse()
       ) : (
-        <h1>Nothing yet.</h1>
+        <h1>لا يوجد أي اعلانات</h1>
       )}
     </div>
   );

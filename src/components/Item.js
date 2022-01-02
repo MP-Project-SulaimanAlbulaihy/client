@@ -174,10 +174,9 @@ const Item = () => {
           <p>المعلن: {post[0]?.user.username}</p>
           {userRole == "admin" || userRole == "same_user" ? (
             <button onClick={() => setEdit(true)}>
-              <p>
-                تعديل{" "}
+              <p id="edit_logo">
+                تعديل{"  "}
                 <i class="far fa-edit">
-                  <p></p>
                 </i>
               </p>
             </button>
@@ -237,8 +236,7 @@ const Item = () => {
             </button>
           ) : (
             <button onClick={addFavourit}>
-               <i class="fas fa-star"></i> 
-              
+              <i class="fas fa-star"></i>
             </button>
           )}
         </div>
@@ -246,21 +244,32 @@ const Item = () => {
 
       {ReqBtn ? (
         <form onSubmit={requestItem}>
-          <div className="notePageRest" ref={noteRest}>
+          <div className="notePageRest" ref={noteRest} dir="rtl">
             <div className="notePage">
-              <h3>Note:</h3>
+              <h3>ملاحظة</h3>
               <textarea
                 name="note"
                 id=""
                 cols="30"
                 rows="10"
-                placeholder="هل تريد اضافة ملاحظة لصاحب السلعة.."
+                placeholder="هل تريد اضافة ملاحظة إلى المستخدم .."
               ></textarea>
-              {post[0]?.status == "post" ? (
-                <button type="submit">Request to lend</button>
-              ) : (
-                <button type="submit">Offer him</button>
-              )}
+              <div>
+                {post[0]?.status == "post" ? (
+                  <button type="submit">طلب الإستعارة</button>
+                ) : (
+                  <button type="submit">تقديم مساعدة</button>
+                )}
+                <button
+                  id="back_note_page"
+                  type="button"
+                  onClick={() => {
+                    setReqBtn(false);
+                  }}
+                >
+                  تراجع
+                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -272,15 +281,23 @@ const Item = () => {
         <div className="notePageRest" ref={noteRest}>
           <div className="notePage">
             {post[0]?.status == "post" ? (
-              <>
-                <h3>Your request has been recieved</h3>
-                <p>Kinldy wait for owner approval</p>
-                <p>You can check status of request in dashboard page</p>
-              </>
+              <div className="success_page">
+                <h3>تم استلام طلبك</h3>
+                <p>
+                  يرجى انتظار رد صاحب السلعة على الطلب
+                  <br />
+                  ويمكنك متابعة حالة الطلب في الملف الشخصي
+                </p>
+              </div>
             ) : (
-              <p>Your mobile and note will be shared with owner to contact you</p>
+              <div className="success_page">
+                <h3>تم استلام طلبك</h3>
+                <p>سوف يتم ارسال رقم الجوال الى العميل لكي يتواصل معك</p>
+              </div>
             )}
-            <button onClick={() => setResBtn(false)}>OK</button>
+            <button onClick={() => setResBtn(false)} id="success_btn">
+              حسناً
+            </button>
           </div>
         </div>
       ) : (
@@ -288,20 +305,20 @@ const Item = () => {
       )}
 
       {edit ? (
-        <>
-          <form onSubmit={update}>
+        <div className="edit_form">
+          <form onSubmit={update} dir="rtl">
             <div className="notePageRest" ref={noteRest}>
               <div className="edit">
                 <div>
-                  <label>Edit Title:</label>
+                  <label>العنوان</label>
                   <input type="text" name="title" defaultValue={post[0]?.title} />
                 </div>
                 <div>
-                  <label>Edit Description:</label>
+                  <label>الوصف</label>
                   <textarea name="desc" defaultValue={post[0]?.title} cols="30" rows="10"></textarea>
                 </div>
                 <div>
-                  <label htmlFor="category">Category</label>
+                  <label htmlFor="category">تصنيف الطلب</label>
                   <select name="category" defaultValue={post[0]?.category}>
                     <option value="أدوات منزلية">أدوات منزلية</option>
                     <option value="أثاث">أثاث</option>
@@ -310,8 +327,7 @@ const Item = () => {
                   </select>
                 </div>
                 <div>
-                  {console.log(post[0]?.duration)}
-                  <label htmlFor="duration">Duration</label>
+                  <label htmlFor="duration">مدة الإستعارة</label>
                   <select name="duration" defaultValue={post[0]?.duration}>
                     <option value="دقيقة 30">دقيقة 30</option>
                     <option value="ساعة">ساعة</option>
@@ -339,28 +355,28 @@ const Item = () => {
                     id="img"
                     style={{ display: "none" }}
                   />
-                  <label htmlFor="img">Upload Images</label>
+                  <label htmlFor="img">تحميل صور</label>
                   {!(progress == 0) ? (
                     <div className="progress">
-                      <p>Uploading {progress}%</p>
+                      <p>يتم الرفع {progress}%</p>
                     </div>
                   ) : null}
                 </div>
-                <div>
-                  <button type="submit">Edit</button>
-                  <button
+                <div id="iii">
+                  <button id="back_note_page"
                     onClick={() => {
                       setEdit(false);
                       getPost();
                     }}
                   >
-                    Cancel
+                    الغاء
                   </button>
+                  <button type="submit">تعديل</button>
                 </div>
               </div>
             </div>
           </form>
-        </>
+        </div>
       ) : (
         <></>
       )}
