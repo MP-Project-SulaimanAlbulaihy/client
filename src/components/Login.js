@@ -60,10 +60,7 @@ const Login = () => {
 
   const pull_mark = (data) => setPulledMark(data);
 
-  useEffect(() => {
-    console.log(pulledMark.lat + "," + pulledMark.lng);
-  }, [pulledMark]);
-
+ 
   return (
     <>
       {showMap ? (

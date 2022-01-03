@@ -12,7 +12,6 @@ const Items = () => {
   const getPosts = () => {
     try {
       axios.get(`${BASE_URL}/posts`).then((result) => {
-        console.log(result.data);
         setPosts(result.data);
       });
     } catch (error) {
@@ -24,6 +23,11 @@ const Items = () => {
   useEffect(() => {
     getPosts();
   }, []);
+  const [doItOnce, setDoItOnce] = useState(true);
+
+  useEffect(() => {
+    console.log(doItOnce);
+  }, [doItOnce])
 
   return (
     <div className="items">
@@ -32,11 +36,12 @@ const Items = () => {
           .map((item) => {
             return (
               <div key={item._id} className="single_one">
+                {console.log('why not excuted ??')}
                 {lat + 0.006 > Number(item?.user?.location.split(",")[0]) &&
                 lat - 0.006 < Number(item?.user?.location.split(",")[0]) &&
                 lng + 0.006 > Number(item?.user?.location.split(",")[1]) &&
                 lng - 0.006 < Number(item?.user?.location.split(",")[1]) ? (
-                  <div className="items_post">
+                  <div className="items_post" >
                     <img
                       src={item.img[0]}
                       wdith="90"
@@ -46,10 +51,16 @@ const Items = () => {
                     />
                     <div className="items_post_text">
                       <h2 onClick={() => navigate(`/post/${item._id}`)}>{item.title}</h2>
-                      <p dir="rtl">أنشأَ في {item.createdAt.slice(0, 10)} {item.createdAt.slice(11,16)}</p>
+                      <p dir="rtl">
+                        أنشأَ في {item.createdAt.slice(0, 10)} {item.createdAt.slice(11, 16)}
+                      </p>
                     </div>
                     <div className="items_post_status">
-                     {item.status=="post"?<h2 id="post_item_h2">عرض للإستعارة</h2>:<h2 id="request_item_h2">طلب إستعارة</h2>}
+                      {item.status == "post" ? (
+                        <h2 id="post_item_h2">عرض للإستعارة</h2>
+                      ) : (
+                        <h2 id="request_item_h2">طلب إستعارة</h2>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -60,7 +71,18 @@ const Items = () => {
           })
           .reverse()
       ) : (
-        <h1 className="nothing_yet" dir="rtl">لا يوجد عروض أو طلبات حتى الان في منطقتك...</h1>
+        <h1 className="nothing_yet" dir="rtl">
+          جاري تحميل الصفحة..
+        </h1>
+      )}
+      {doItOnce ? (
+        <>
+          <h1 className="nothing_yet" dir="rtl">
+            لا يوجد عروض أو طلبات حتى الان في منطقتك...
+          </h1>
+        </>
+      ) : (
+        <></>
       )}
     </div>
   );

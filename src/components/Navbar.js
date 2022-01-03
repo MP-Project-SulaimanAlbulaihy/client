@@ -11,6 +11,7 @@ const Navbar = () => {
   const logout = ()=> {
     localStorage.removeItem('user_data'); 
     setUser(null)
+    navigate('/')
   }
 
   const isTokenExpired = ()=> {

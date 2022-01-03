@@ -28,7 +28,9 @@ const Favourite = () => {
 
   return (
     <div className="fav_component">
+      <h1 className="favourite_title">المفضلة</h1>
       <div className="favourite">
+
         <div className="borrowed">
           {posts.length ? (
             posts

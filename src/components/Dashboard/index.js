@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Footer from "../Footer";
+import Map from "../Map";
 import AlreadyBorrowed from "./AlreadyBorrowed";
 import MyOffers from "./MyOffers";
 import MyPosts from "./MyPosts";
@@ -17,6 +18,8 @@ const Dashboard = () => {
   const noteRest = useRef(null);
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [pulledMark, setPulledMark] = useState([]);
+  const [showMap, setShowMap] = useState(false);
 
   window.onclick = (e) => {
     if (e.target === noteRest.current) {
@@ -24,6 +27,8 @@ const Dashboard = () => {
       //   getPost();
     }
   };
+
+  const pull_mark = (data) => setPulledMark(data);
 
   const update_profile = async (e) => {
     e.preventDefault();
@@ -149,11 +154,12 @@ const Dashboard = () => {
                   <input type="password" name="password" placeholder="رقم سري جديد؟" />
                   <br />
                   <label htmlFor="location">الموقع الجغرافي</label>
-                  <input type="text" name="location" defaultValue={User?.result?.location} />
-                  <button type="button">تغيير الموقع</button>
+                  <input type="text" name="location" value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : User?.result?.location}/>
+                  <button type="button" onClick={()=>setShowMap(true)}>تغيير الموقع</button>
                   {err ? <p>err</p> : <></>}
                   <div id="iii">
-                    <button  id="back_note_page"
+                    <button
+                      id="back_note_page"
                       onClick={() => {
                         setEdit_profile(false);
                       }}
@@ -170,6 +176,21 @@ const Dashboard = () => {
       ) : (
         <></>
       )}
+
+      {showMap ? (
+        <div className="map_container">
+          <div className="map">
+            <Map mark={pull_mark} />
+            <span onClick={() => setShowMap(false)}>
+              <i class="fas fa-times"></i>
+            </span>
+            <button onClick={() => setShowMap(false)}>موافق</button>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+
       <Footer />
     </div>
   );
