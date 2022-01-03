@@ -191,7 +191,7 @@ select {
   width: 20%;
 }
 .nothing_yet {
-  margin: auto auto;
+  margin: auto auto; 
 }
 .single_one:hover {
   background-color: white;
@@ -563,25 +563,27 @@ select {
   border: none;
 }
 .showReqsBtn:hover {
-  background-color: #ffffff;
+  background-color: white;
   animation: border 0.7s ease-in;
-  border: 2px solid #194051;
+  
 }
 
+.showReqsBtn h1:hover{
+  font-size: 2.95vw;
+}
 .showReqsBtn h1 {
   font-size: 3vw;
   animation: float 0.7s ease-in-out infinite;
 }
 @keyframes float {
-  0%,
   100% {
     transform: none;
   }
   33% {
-    transform: translateY(-0.5px);
+    transform: translateY(-0.8px);
   }
   66% {
-    transform: translateY(0.5px);
+    transform: translateY(0.8px);
   }
 }
 
@@ -597,16 +599,19 @@ select {
   padding: 40px;
   width: 30%;
   height: 400px;
-  border-radius: 15px;
   background-color: white;
   margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   font-size: 1.6vw;
+  border-top: 7px solid #163644;
 }
 .col p {
   font-size: 1.2vw;
+}
+.col h3{
+  color: #163644;
 }
 
 .wizard img {
@@ -628,17 +633,21 @@ select {
 }
 .wizard_container span {
   position: absolute;
-  font-size: 2rem;
-  color: rgb(231, 231, 231);
-  background-color: #999999;
-  margin: -15px;
+  font-size: 1.7rem;
+  color:#163644;
+  background-color:#ebf2f9ee;
+  margin: -20px;
   border-radius: 50%;
-  width: 50px;
+  width: 45px;
   text-align: center;
   cursor: pointer;
 }
 .wizard_container span:hover {
-  color: rgb(255, 255, 255);
+  background-color: #ebf2f9;
+  color: rgb(170, 0, 0);
+}
+.wizard_container i {
+  vertical-align: middle;
 }
 
 /*  Login/Sign up Pages  */
@@ -775,17 +784,21 @@ select {
 }
 .map_container span {
   position: absolute;
-  font-size: 2rem;
-  color: rgb(231, 231, 231);
-  background-color: #999999;
+  font-size: 1.5rem;
+  color:#163644;
+  background-color: #ebf2f9ee;
   margin: -15px;
   border-radius: 50%;
-  width: 50px;
+  width: 40px;
   text-align: center;
   cursor: pointer;
 }
+.map_container span i{
+  vertical-align: middle;
+}
 .map_container span:hover {
-  color: rgb(255, 255, 255);
+  background-color: #ebf2f9;
+  color: rgb(170, 0, 0);
 }
 .real_map {
   width: 100%;

@@ -70,7 +70,7 @@ const Register = () => {
         <div className="map_container">
           <div className="map">
             <Map mark={pull_mark} />
-            <span onClick={() => setShowMap(false)}>✘</span>
+            <span onClick={() => setShowMap(false)}><i class="fas fa-times"></i></span>
             <button onClick={() => setShowMap(false)}>موافق</button>
           </div>
         </div>
