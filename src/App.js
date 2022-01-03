@@ -26,7 +26,7 @@ function App() {
       <div className={`wizard_container ${wizard}`}>
         <div className="wizard">
           <img src="https://i.ibb.co/71WXQyJ/c1c76764cc32bb0411236fa171279134.jpg" alt="wizard" />
-          <span onClick={() => setWizard('hide')}>✘</span>
+          <span onClick={() => setWizard('hide')}><i class="fas fa-times"></i></span>
         </div>
       </div>
       <UserContext.Provider value={value}>

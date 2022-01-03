@@ -34,7 +34,7 @@ const NewPost = () => {
           { headers: { Authorization: `Bearer ${User.token}` } }
         );
         console.log(result.data);
-        navigate("/");
+        navigate("/posts");
       }
     } catch (error) {
       console.log(error);
