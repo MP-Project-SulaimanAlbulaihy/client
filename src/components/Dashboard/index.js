@@ -9,6 +9,8 @@ import MyOffers from "./MyOffers";
 import MyPosts from "./MyPosts";
 import NeighborsRequests from "./NeighborsRequests";
 import WaitingApproval from "./WaitingApproval";
+import { storage } from "../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
 
 const Dashboard = () => {
   const { User, setUser } = useContext(UserContext);
@@ -20,6 +22,8 @@ const Dashboard = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [pulledMark, setPulledMark] = useState([]);
   const [showMap, setShowMap] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [images, setImages] = useState("");
 
   window.onclick = (e) => {
     if (e.target === noteRest.current) {
@@ -55,6 +59,24 @@ const Dashboard = () => {
     }
   };
 
+  const update_profile_image = async () => {
+      console.log(images);
+    try {
+      const result = await axios.put(
+        `${BASE_URL}/update_user`,
+        {
+          id: User?.result?._id,
+          avatar: images
+        },
+        { headers: { Authorization: `Bearer ${User.token}` } }
+      );
+        getUser();
+        console.log(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getUser = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/get_user`, { headers: { Authorization: `Bearer ${User.token}` } });
@@ -71,6 +93,35 @@ const Dashboard = () => {
     if (User) getUser();
   }, [User]);
 
+
+  const uploadPictures = (e) => {
+    let image = e.target.files[0];
+    const dataType = image.name.match(/\.(jpe?g|png|gif)$/gi);
+    if (image == null || dataType == null) return;
+    const storageRef = ref(storage, `images/${image.name}`);
+    const uploadImamge = uploadBytesResumable(storageRef, image);
+    uploadImamge.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        setProgress(progress);
+      },
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadImamge.snapshot.ref).then((url) => {
+          setImages(url);
+          console.log(url);
+        });
+      }
+    );
+  };
+
+  useEffect(() => {
+    setProgress(0);
+    if(images) update_profile_image()
+  }, [images]);
+
+
   return (
     <div>
       <div className="dashboard">
@@ -81,12 +132,26 @@ const Dashboard = () => {
             rating
           </p> */}
           <div className="profile">
-            <img
-              src="https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Image-Transparent-Background.png"
-              alt="profile imag"
-              width="200px"
-              height="200px"
-            />
+            <img src={CurrentUser?.avatar} alt="profile imag" width="60%" height="200px" />
+
+              <input
+                type="file"
+                accept=".gif,.jpg,.jpeg,.png"
+                onChange={(e) => {
+                  uploadPictures(e);
+                }}
+                id="img"
+                style={{ display: "none" }}
+              />
+              <label htmlFor="img" id="edit_profile_image">
+               تعديل
+              </label>
+              {!(progress == 0) ? (
+                <div className="progress">
+                  <p>قيد الرفع {progress}%</p>
+                </div>
+              ) : null}
+
             <p>{CurrentUser?.username}</p>
           </div>
           <div className="profile_info" dir="rtl">
@@ -154,8 +219,14 @@ const Dashboard = () => {
                   <input type="password" name="password" placeholder="رقم سري جديد؟" />
                   <br />
                   <label htmlFor="location">الموقع الجغرافي</label>
-                  <input type="text" name="location" value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : User?.result?.location}/>
-                  <button type="button" onClick={()=>setShowMap(true)}>تغيير الموقع</button>
+                  <input
+                    type="text"
+                    name="location"
+                    value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : User?.result?.location}
+                  />
+                  <button type="button" onClick={() => setShowMap(true)}>
+                    تغيير الموقع
+                  </button>
                   {err ? <p>err</p> : <></>}
                   <div id="iii">
                     <button

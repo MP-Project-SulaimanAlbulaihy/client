@@ -1,16 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './style.css'
 
 const Footer = () => {
+    const navigate = useNavigate()
     return (
         <div>
                 <div class="footer-basic">
         <footer>
             <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#" dir='rtl'>عن الموقع</a></li>
-                <li class="list-inline-item"><a href="#">الصفحة الرئيسية</a></li>
-                <li class="list-inline-item"><a href="#">الطلبات</a></li>
+                <li class="list-inline-item"><a onClick={()=>navigate('/')} dir='rtl'>عن الموقع</a></li>
+                <li class="list-inline-item"><a onClick={()=>navigate('/')}>الصفحة الرئيسية</a></li>
+                <li class="list-inline-item"><a onClick={()=>navigate('/posts')}>الطلبات</a></li>
             </ul>
             <p class="copyright">جميع الحقوق محفوظة لدى جيراني © 2022</p>
         </footer>

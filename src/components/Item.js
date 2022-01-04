@@ -103,7 +103,19 @@ const Item = () => {
       console.log(error);
     }
   };
-
+  const deletePost = () => {
+    try {
+      axios
+        .get(`${BASE_URL}/delete_post/${post[0]._id}`, { headers: { Authorization: `Bearer ${User.token}` } })
+        .then((result) => {
+          if (result.data == "deleted") {
+            navigate('/posts')
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const update = async (e) => {
     e.preventDefault();
 
@@ -159,12 +171,8 @@ const Item = () => {
 
   const [userRole, setUserRole] = useState("");
   useEffect(() => {
-    console.log("post id ", post[0]?.user._id);
-    console.log("user id ", User?.result._id);
-    console.log("userRole  ", userRole);
     if (User && post[0]?.user._id == User?.result._id) setUserRole("same_user");
     else if (User?.result.role == "admin") setUserRole("admin");
-    console.log(userRole);
   }, [User, post]);
   return (
     <div>
@@ -176,8 +184,7 @@ const Item = () => {
             <button onClick={() => setEdit(true)}>
               <p id="edit_logo">
                 تعديل{"  "}
-                <i class="far fa-edit">
-                </i>
+                <i class="far fa-edit"></i>
               </p>
             </button>
           ) : (
@@ -363,10 +370,19 @@ const Item = () => {
                   ) : null}
                 </div>
                 <div id="iii">
-                  <button id="back_note_page"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      deletePost();
+                    }}
+                    id="delete_post"
+                  >
+                    حذف الإعلان
+                  </button>
+                  <button
+                    id="back_note_page"
                     onClick={() => {
                       setEdit(false);
-                      getPost();
                     }}
                   >
                     الغاء

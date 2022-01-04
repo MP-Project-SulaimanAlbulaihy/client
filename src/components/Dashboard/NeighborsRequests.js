@@ -15,8 +15,7 @@ const NeighborsRequests = () => {
         axios
           .get(`${BASE_URL}/waiting_acceptance`, { headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log(result.data);
-            if(typeof result.data == 'object') setPosts(result.data);
+            setPosts(result.data);
           });
       } catch (error) {
         console.log(error);
@@ -28,11 +27,26 @@ const NeighborsRequests = () => {
     if (User) {
       try {
         axios
-          .post(`${BASE_URL}/accept_borrow`, {id:item._id},{ headers: { Authorization: `Bearer ${User.token}` } })
+          .post(`${BASE_URL}/accept_borrow`, {id:item._id, postID:item.post._id},{ headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
             console.log(result.data);
             alert('accepted')
-            window.location.reload(); 
+            getList(); 
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const reject = (item) => {
+    if (User) {
+      try {
+        axios
+          .post(`${BASE_URL}/reject_borrow`, {id:item._id},{ headers: { Authorization: `Bearer ${User.token}` } })
+          .then((result) => {
+            console.log(result.data);
+            alert('rejected')
+            getList(); 
           });
       } catch (error) {
         console.log(error);
@@ -56,7 +70,7 @@ const NeighborsRequests = () => {
                   src={
                     item.post.img[0]
                       ? item.post.img[0]
-                      : "https://rapidapi.com/cdn/images?url=https://rapidapi-prod-apis.s3.amazonaws.com/479bb0d4-f442-4c61-8483-a4fc2abb1e88.png"
+                      : "https://i.ibb.co/rFxkHwV/153-1538921-transparent-community-icon-png-cartoon-transparent-community-png.png"
                   }
                   wdith="90"
                   height="90"
@@ -64,7 +78,8 @@ const NeighborsRequests = () => {
                   onClick={() => navigate(`/post/${item.post._id}`)}
                 />
                   <button onClick={()=>accept(item)} className="acceptBtn">قبول الطلب</button>
-                  <p>ملاحظة: {item.note}</p>
+                  <button onClick={()=>reject(item)} className="rejectBtn">رفض الطلب</button>
+                  <p dir="rtl">ملاحظة: {item.note.length?<>{item.note}</>:<>لا يوجد</>}</p>
                 <div className="items_post_text">
                   <h2 onClick={() => navigate(`/post/${item.post._id}`)}>{item.post.title}</h2>
                   <p>أنشأ في {item.post.createdAt.slice(0, 10)}</p>

@@ -35,8 +35,8 @@ const MyPosts = () => {
           .map((item) => {
             return (
               <div key={item._id} className="items_post">
-                <img src={item.img[0]?item.img[0]:'https://rapidapi.com/cdn/images?url=https://rapidapi-prod-apis.s3.amazonaws.com/479bb0d4-f442-4c61-8483-a4fc2abb1e88.png'} wdith="90" height="90" alt="" onClick={() => navigate(`/post/${item._id}`)}/>
-                <div className="items_post_status">
+                <img src={item.img[0]?item.img[0]:'https://i.ibb.co/rFxkHwV/153-1538921-transparent-community-icon-png-cartoon-transparent-community-png.png'} wdith="90" height="90" alt="" onClick={() => navigate(`/post/${item._id}`)}/>
+                <div className="items_post_status"  id="special_status">
                   <h2> الحاله: {item.status=='post'?<>عرض سلعة</>:<>طلب استعارة</>}</h2>
                 </div>
                 <div className="items_post_text">
