@@ -37,8 +37,11 @@ button {
   align-items: center;
   color: white;
 }
+#active{
+  color: rgb(223, 223, 223);
+}
 .navbar button {
-  animation: navbar 2s ease-in;
+  animation: navbar 1s ease-in;
   height: 100%;
   width: 150px;
   border: none;
@@ -81,6 +84,43 @@ button {
   color: #163644;
   padding: 10px;
 }
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  /* padding: 16px; */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 
 /* Add Post */
 .add_post {
@@ -189,6 +229,9 @@ select {
 }
 .items_post_status {
   width: 20%;
+}
+#special_status{
+  width: 50%;
 }
 .nothing_yet {
   margin: auto auto; 
@@ -335,6 +378,15 @@ select {
 #back_note_page:hover{
   background-color: #f1f1f1;
 }
+#delete_post{
+  background-color: rgb(219, 126, 126);
+  position:absolute;
+  right: 30px;
+  padding: 5px 0;
+}
+#delete_post:hover{
+  background-color: rgb(204, 64, 64);
+}
 .success_page{
   color: #234b73;
   font-size: 1.5rem;
@@ -364,13 +416,18 @@ select {
   flex-direction: column;
   align-items: center;
   width: 35%;
+  position: relative;
 }
-
+.profile img{
+  border-radius: 50%;
+  margin-top: 5px;
+}
 .profile_info{
   padding: 15px;
   width: 63%;
   display: flex;
   flex-direction: column;
+  font-size: 1.1vw;
 }
 .profile_info button{
   width: 30%;
@@ -379,6 +436,10 @@ select {
   background-color: #245d75;
   color: white;
   font-size: 0.9vw;
+  border: none;
+}
+.profile_info button:hover{
+  background-color: #1f4f64;
 }
 .profile_info div{
   width: 100%;
@@ -386,6 +447,19 @@ select {
   justify-content: space-between;
   height: 50px;
   align-items: center;
+}
+#edit_profile_image{
+  position: absolute;
+  bottom: 23%;
+  background-color: #9d9d9d6b;
+  border-radius: 20px;
+  color:#163644;
+  width: 15%;
+  border: none;
+  padding: 2px;
+}
+#edit_profile_image:hover{
+  background-color: #9d9d9d8c;
 }
 .edit_form{
   padding: 20px;
@@ -417,17 +491,33 @@ select {
 .item_full h1{
   text-align: center;
   margin: -30px 0 30px 0;
+  font-size: 2vw;
 }
 .acceptBtn{
   background-color: #245d75;
-  width: 40%;
+  width: 20%;
   height: 40px;
-  margin: 0 15%;
-  font-size: 1.5vw;
+  font-size: 1.3vw;
   color: white;
   border: none;
+  margin-left: 20px;
 }
+.acceptBtn:hover{
+  background-color: #1f4f64;
 
+}
+.rejectBtn{
+  background-color: rgb(219, 126, 126);
+  color: white;
+  height: 40px;
+  width: 20%;
+  border: none;
+  font-size: 1.3vw;
+  margin-left: 40px;
+}
+.rejectBtn:hover{
+  background-color: rgb(204, 64, 64);
+}
 /* Messages page */
 .messages_component {
   width: 60%;
@@ -450,10 +540,10 @@ select {
 }
 .chat {
   width: 70%;
-  border: 1px solid white;
+  border: 3px solid #244b75;
 }
 .message_history {
-  border: 1px solid white;
+  border: 3px solid #244b75;
   width: 30%;
 }
 .chat .log {
@@ -464,11 +554,15 @@ select {
   align-items: flex-end;
   overflow: auto;
 }
+#me_chat{
+  background-color: rgb(0, 79, 250);
+  color: rgb(241, 241, 241);
+}
 .chat .log p {
   width: fit-content;
   background-color: white;
   text-align: right;
-  padding: 14px;
+  padding: 3px 5px 3px 14px;
   margin: 10px;
   border-radius: 10px;
 }
@@ -482,9 +576,14 @@ select {
 .chat .input input {
   width: 98%;
   height: 80%;
+  padding: 10px;
   border-radius: 15px;
   padding-left: 15px;
   margin-left: 10px;
+}
+.chat .input input::placeholder {
+  padding: 5px;
+
 }
 .chat .input button {
   height: 80%;
@@ -505,7 +604,7 @@ select {
   justify-content: right;
   align-items: center;
   padding: 15px;
-  border: 1px solid black;
+  border: 2px solid #ebf2f9;
   cursor: pointer;
 }
 #no_chat_history{
@@ -538,7 +637,10 @@ select {
   width: 60%;
   margin: 0px auto;
 }
-
+#no_favourite_yet{
+  text-align: center;
+  background-color: #f8f8f8;
+}
 /*  Landing Page  */
 .landing_page {
   text-align: center;
@@ -678,10 +780,7 @@ select {
   margin: 80px auto 0 auto;
   width: 40%;
   height: 700px;
-  background: red;
   overflow: hidden;
-  background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38")
-    no-repeat center/ cover;
   border-radius: 10px;
   box-shadow: 5px 20px 50px #000;
 }
@@ -905,17 +1004,8 @@ select {
   background-color: #ebf2f9;
 }
 .commentHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 1.2rem;
-}
-
-.commentHead button {
-  height: 40px;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
+  text-align: right;
 }
 
 .comments_form img {
@@ -924,8 +1014,13 @@ select {
 }
 .commentTail {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  background-color: red;
   color: white;
+}
+.commentTail textarea{
+  width: 100%;
 }
 textarea::placeholder {
   padding: 10px;
@@ -969,11 +1064,16 @@ hr {
   padding: 4px 13px;
   height: 40px;
 }
-.submit_comment_btn {
+#submit_comment_btn {
   background-color: #245d75;
   color: white;
-  margin-bottom: 5px;
+  float: right;
+  margin: 10px 0;
+  width: 20%;
+  padding: 7px;
+  display: block;
 }
+
 .flex_inline {
   display: flex;
 }

@@ -35,8 +35,8 @@ const WaitingApproval = () => {
           .map((item) => {
             return (
               <div key={item._id} className="items_post">
-                <img src={item.post.img[0]?item.post.img[0]:'https://rapidapi.com/cdn/images?url=https://rapidapi-prod-apis.s3.amazonaws.com/479bb0d4-f442-4c61-8483-a4fc2abb1e88.png'} wdith="90" height="90" alt="" onClick={() => navigate(`/post/${item.post._id}`)}/>
-                <div className="items_post_status">
+                <img src={item.post.img[0]?item.post.img[0]:'https://i.ibb.co/rFxkHwV/153-1538921-transparent-community-icon-png-cartoon-transparent-community-png.png'} wdith="90" height="90" alt="" onClick={() => navigate(`/post/${item.post._id}`)}/>
+                <div className="items_post_status" id="special_status">
                   <h2> الحاله: {item.status=='pending'?<>قيد الانتظار</>:<></>}</h2>
                 </div>
                 <div className="items_post_text">

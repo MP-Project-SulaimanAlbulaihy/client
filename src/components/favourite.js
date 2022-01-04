@@ -49,7 +49,7 @@ const Favourite = () => {
                       onClick={() => navigate(`/post/${item.post._id}`)}
                     />
                     <div className="items_post_status">
-                      <h2>نوع الطلب <br/>{item.post.status=='post'?<>عرض سلعة</>:<>طلب إستعارة</>}</h2>
+                      <h2 >نوع الطلب <br/><h5>{item.post.status=='post'?<>عرض سلعة</>:<>طلب إستعارة</>}</h5></h2>
                     </div>
                     <div className="items_post_text">
                       <h2 onClick={() => navigate(`/post/${item.post._id}`)}>{item.post.title}</h2>
@@ -60,7 +60,7 @@ const Favourite = () => {
               })
               .reverse()
           ) : (
-            <h1>لا يوجد تفضيل إلى الان</h1>
+            <h1 id="no_favourite_yet">لا يوجد تفضيل إلى الان</h1>
           )}
         </div>
       </div>

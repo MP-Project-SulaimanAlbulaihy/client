@@ -134,11 +134,11 @@ const Messages = () => {
           <div className="chat">
             <div className="log">
               {getuserchat?.map((item, index) => (
-                <div key={index}>
+                <div key={index} dir="rtl">
                   {(item.to == currentTo)||(item.from==currentTo) ? (
                     <>
                       {item.content.map((i, index) => (
-                        <p key={index}>
+                        <p key={index} id={item.to == currentTo?'me_chat':''}>
                             <span>{item.username}</span>
                           <br />
                           <span>{i}</span>
@@ -151,7 +151,7 @@ const Messages = () => {
                 </div>
               ))}
               {chat.map(({ username, message }, index) => (
-                <p key={index}>
+                <p key={index}  id='me_chat'>
                   {username}
                   <br />
                   <span>{message}</span>
@@ -162,15 +162,15 @@ const Messages = () => {
             {currentTo ? (
               <form onSubmit={onMessageSubmit}>
                 <div className="input">
-                  <input
+                  <input dir="rtl"
                     type="text"
                     name="chat_input"
-                    placeholder="Type message here.."
+                    placeholder="اكتب الرسالة هنا.."
                     name="message"
                     onChange={(e) => onTextChange(e)}
                     value={state.message}
                   />
-                  <button>Send</button>
+                  <button>أرسل</button>
                 </div>
               </form>
             ) : (

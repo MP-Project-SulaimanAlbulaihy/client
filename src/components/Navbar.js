@@ -7,6 +7,7 @@ const Navbar = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [showNotification, setshowNotification] = useState(false)
   const {User,setUser} = useContext(UserContext)
+  const [activeMenu, setActiveMenu] = useState("")
 
   const logout = ()=> {
     localStorage.removeItem('user_data'); 
@@ -39,27 +40,28 @@ const Navbar = () => {
   // console.log('user is ',User);
   return (
     <div className="navbar">
-      
-      {showNotification?<div className="noti">
-        <p>لا يوجد اشعارات</p>
-      </div>:null}
 
       {User?
       <>
         <div>
           <button onClick={logout}> <p>خروج</p> </button>
-          <button onClick={() => {navigate("/notification")}} onMouseOver={()=>{setshowNotification(true)}} onMouseOut={()=>{setshowNotification(false)}}> <p><i class="far fa-bell"></i> الاشعارات</p> </button>
+          <div class="dropdown">
+            <button class="dropbtn"> <p><i class="far fa-bell"></i> الاشعارات</p></button>
+              <div class="dropdown-content">
+                <a><p>لا يوجد اشعارات</p></a>
+               </div>
+          </div>
         </div>
         <div>
-            <button onClick={() => {navigate("/messages")}}> <p>الرسائل</p> </button>
-            <button onClick={() => {navigate("/favourite")}}> <p>مفضلتي</p> </button>
-            <button onClick={() => {navigate("/dashboard")}}> <p>ملفي الشخصي</p> </button>
-            <button onClick={() => {navigate("/posts")}}> <p>الطلبات</p> </button>
+            <button id={activeMenu=='messages'?`active`:null} onClick={() => {navigate("/messages"); setActiveMenu('messages')}}> <p>الرسائل</p> </button>
+            <button id={activeMenu=='fav'?`active`:null} onClick={() => {navigate("/favourite"); setActiveMenu('fav')}}> <p>مفضلتي</p> </button>
+            <button id={activeMenu=='profile'?`active`:null} onClick={() => {navigate("/dashboard"); setActiveMenu('profile')}}> <p>ملفي الشخصي</p> </button>
+            <button id={activeMenu=='home'?`active`:null} onClick={() => {navigate("/posts"); setActiveMenu('home')}}> <p>الرئيسية</p> </button>
         </div>
       </>:
           <div>
-            <button onClick={() => {navigate("/login")}}> <p>دخول</p> </button>
-            <button onClick={() => {navigate("/signup")}}> <p>تسجيل جديد</p> </button>
+            <button id={activeMenu=='login'?`active`:null} onClick={() => {navigate("/login"); setActiveMenu('login')}}> <p>دخول</p> </button>
+            <button id={activeMenu=='register'?`active`:null} onClick={() => {navigate("/signup"); setActiveMenu('register')}}> <p>تسجيل جديد</p> </button>
           </div>}
       <div onClick={() => {navigate("/")}}><img src="https://i.ibb.co/HXCzxGP/Screenshot-2022-01-01-052203.png" /></div>
     </div>

@@ -11,7 +11,7 @@ const Item_comments = (props) => {
   const sendComment = async (e) => {
     e.preventDefault();
     if (User) {
-    try {
+      try {
         const result = await axios.post(
           `${BASE_URL}/new_comment/${props.postId}`,
           {
@@ -25,8 +25,8 @@ const Item_comments = (props) => {
         console.error(err);
       }
       e.target.comment.value = "";
-    }else {
-      alert('Log in first..')
+    } else {
+      alert("Log in first..");
     }
   };
 
@@ -80,46 +80,51 @@ const Item_comments = (props) => {
       <form className="comments_form" onSubmit={sendComment}>
         <div className="commentHead">
           <h3>إضافة تعليق</h3>
-          <button type="submit" className="submit_comment_btn">إرسال</button>
         </div>
         <div className="commentTail">
-          <img src="https://www.nicepng.com/png/full/522-5226533_get-beyond-the-usual-suspects-profile-pic-icon.png" alt="" />
           <textarea dir="rtl" name="comment" placeholder="محتوى التعليق" required cols="55" rows="8"></textarea>
         </div>
+        <button type="submit" id="submit_comment_btn">
+          إرسال
+        </button><br/>
         <div className="numComment">
-          <h3 dir="rtl">{noComment} تعليق</h3>
+          <h3 dir="rtl">عدد التعليقات {noComment}</h3>
         </div>
         {commments
           ?.map((comment, index) => {
             return (
-              <div className="realComment"  dir="rtl" key={index}>
+              <div className="realComment" dir="rtl" key={index}>
                 <hr />
                 <div className="realcommentRow">
-                <div className="flex_inline"><img
-                    src="https://www.nicepng.com/png/full/522-5226533_get-beyond-the-usual-suspects-profile-pic-icon.png"
-                    alt=""
-                  />
-                  <div className="realcommentData">
-                    <h3>{comment.user.username}</h3>
-                    <p>{comment.comment}</p>
-                    <p className="dateP">
-                      {comment.createdAt.slice(0, 10)}  {comment.createdAt.slice(11, 16)}
-                    </p>
-                  </div></div>
-                  <div className="flex_inline">{comment.user._id == User?.result?._id ? (
-                    <p className="del" onClick={() => DeleteComment(comment._id)}>
-                      <i class="far fa-trash-alt"></i>
-                    </p>
-                  ) : (
-                    <></>
-                  )}
-                  {comment.user._id == User?.result?._id ? (
-                    <p className="del" onClick={() => UpdateComment(comment._id)}>
-                      <i class="far fa-edit"></i>
-                    </p>
-                  ) : (
-                    <></>
-                  )}</div>
+                  <div className="flex_inline">
+                    <img
+                      src={comment.user.avatar}
+                      alt=""
+                    />
+                    <div className="realcommentData">
+                      <h3>{comment.user.username}</h3>
+                      <p>{comment.comment}</p>
+                      <p className="dateP">
+                        {comment.createdAt.slice(0, 10)} {comment.createdAt.slice(11, 16)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex_inline">
+                    {comment.user._id == User?.result?._id ? (
+                      <p className="del" onClick={() => DeleteComment(comment._id)}>
+                        <i class="far fa-trash-alt"></i>
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                    {comment.user._id == User?.result?._id ? (
+                      <p className="del" onClick={() => UpdateComment(comment._id)}>
+                        <i class="far fa-edit"></i>
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
               </div>
             );
