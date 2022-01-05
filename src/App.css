@@ -1007,7 +1007,12 @@ select {
   font-size: 1.2rem;
   text-align: right;
 }
-
+.newComment_input{
+  width: 100%;
+}
+.newComment_input textarea{
+  width: 100%;
+}
 .comments_form img {
   width: 100px;
   height: 100px;
@@ -1016,7 +1021,6 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: red;
   color: white;
 }
 .commentTail textarea{
