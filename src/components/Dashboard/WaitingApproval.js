@@ -15,7 +15,6 @@ const WaitingApproval = () => {
         axios
           .get(`${BASE_URL}/waiting_approval`, { headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log(result.data);
             if(typeof result.data == 'object') setPosts(result.data);
           });
       } catch (error) {

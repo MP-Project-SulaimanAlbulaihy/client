@@ -33,7 +33,6 @@ const NewPost = () => {
           },
           { headers: { Authorization: `Bearer ${User.token}` } }
         );
-        console.log(result.data);
         navigate("/posts");
       }
     } catch (error) {
@@ -57,7 +56,6 @@ const NewPost = () => {
       () => {
         getDownloadURL(uploadImamge.snapshot.ref).then((url) => {
           setImages([...images, url]);
-          console.log(url);
         });
       }
     );

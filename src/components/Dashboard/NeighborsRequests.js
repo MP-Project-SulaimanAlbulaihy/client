@@ -29,7 +29,6 @@ const NeighborsRequests = () => {
         axios
           .post(`${BASE_URL}/accept_borrow`, {id:item._id, postID:item.post._id},{ headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log(result.data);
             alert('accepted')
             getList(); 
           });
@@ -44,7 +43,6 @@ const NeighborsRequests = () => {
         axios
           .post(`${BASE_URL}/reject_borrow`, {id:item._id},{ headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log(result.data);
             alert('rejected')
             getList(); 
           });
@@ -65,7 +63,6 @@ const NeighborsRequests = () => {
           .map((item) => {
             return (
               <div key={item._id} className="items_post">
-                  {/* {console.log(item)} */}
                 <img
                   src={
                     item.post.img[0]

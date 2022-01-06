@@ -16,16 +16,13 @@ const Map = (props) => {
         (err) => alert("Kindly allow location to get your position on the map or choose it manually")
       );
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      alert("Geolocation is not supported by this browser.");
     }
   }
 
   const doubleClick = (e) => {
     setscrollPosition(window.pageYOffset || document.documentElement.scrollTop);
     switch (e.event.detail) {
-      case 1:
-        console.log("click once");
-        break;
       case 2:
         _onClick(e);
         break;

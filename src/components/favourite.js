@@ -13,7 +13,6 @@ const Favourite = () => {
     if (User) {
       try {
         axios.get(`${BASE_URL}/favourite`, { headers: { Authorization: `Bearer ${User.token}` } }).then((result) => {
-          console.log(result.data);
           if (result.data.length) setPosts(result.data);
         });
       } catch (error) {

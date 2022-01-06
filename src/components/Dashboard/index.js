@@ -60,7 +60,6 @@ const Dashboard = () => {
   };
 
   const update_profile_image = async () => {
-      console.log(images);
     try {
       const result = await axios.put(
         `${BASE_URL}/update_user`,
@@ -71,7 +70,6 @@ const Dashboard = () => {
         { headers: { Authorization: `Bearer ${User.token}` } }
       );
         getUser();
-        console.log(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +80,6 @@ const Dashboard = () => {
       const result = await axios.get(`${BASE_URL}/get_user`, { headers: { Authorization: `Bearer ${User.token}` } });
       if (result.data) {
         setCurrentUser(result.data);
-        console.log(result.data);
       }
     } catch (error) {
       console.log(error);
@@ -110,7 +107,6 @@ const Dashboard = () => {
       () => {
         getDownloadURL(uploadImamge.snapshot.ref).then((url) => {
           setImages(url);
-          console.log(url);
         });
       }
     );

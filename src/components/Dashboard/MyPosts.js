@@ -15,7 +15,6 @@ const MyPosts = () => {
         axios
           .get(`${BASE_URL}/my_posts`, { headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log('my posts', result.data);
             if(typeof result.data == 'object') setPosts(result.data);
           });
       } catch (error) {
