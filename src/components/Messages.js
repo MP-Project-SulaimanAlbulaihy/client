@@ -182,6 +182,7 @@ const Messages = () => {
               userHistory?.map((i, index) => (
                 <div className="message_history_person" onClick={() => connectRoom(i)} key={index}>
                   <p>{i.username}</p>
+                  <img src={i.avatar} alt="avatar"/>
                 </div>
               ))
             ) : (
