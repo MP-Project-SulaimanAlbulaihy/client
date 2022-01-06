@@ -36,10 +36,28 @@ const Navbar = () => {
     if(User!==null) isTokenExpired()
   }, [User])
 
-  
+  const [scrolled, setscrolled] = useState(0)
+
+  const scrol = ()=>{ 
+    setscrolled(document.body.scrollTop)
+  }
+  window.onscroll = ()=>setscrolled(document.body.scrollTop);
+  window.addEventListener('scroll', ()=>setscrolled(document.body.scrollTop));
+  useEffect(() => {
+    console.log(scrolled);
+  }, [scrolled])
+  // function scrollFunction() {
+  //   if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+  //     document.getElementsByClassName("navbar").style.width = "400px";
+  //     // document.getElementsByClassName("navbar").style.fontSize = "25px";
+  //   } else {
+  //     // document.getElementsByClassName("navbar").style.padding = "80px 10px";
+  //     // document.getElementsByClassName("navbar").style.fontSize = "35px";
+  //   }
+  // }
   // console.log('user is ',User);
   return (
-    <div className="navbar">
+    <div className="navbar" onScroll={scrol}>
 
       {User?
       <>

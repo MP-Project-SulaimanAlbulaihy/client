@@ -36,6 +36,7 @@ button {
   height: 50px;
   align-items: center;
   color: white;
+  position:fixed ;
 }
 #active{
   color: rgb(223, 223, 223);
@@ -211,6 +212,7 @@ select {
 }
 .items_post img {
   cursor: pointer;
+  width: 12%;
 }
 .reqBtns {
   width: 60%;
@@ -224,10 +226,12 @@ select {
 }
 .items_post_text {
   text-align: right;
+  font-size: 1.4vw;
   width: 60%;
   cursor: pointer;
 }
 .items_post_status {
+  font-size: 1.1vw;
   width: 20%;
 }
 #special_status{
@@ -450,6 +454,7 @@ select {
 }
 #edit_profile_image{
   position: absolute;
+  font-size: 1.1vw;
   bottom: 23%;
   background-color: #9d9d9d6b;
   border-radius: 20px;
@@ -607,6 +612,9 @@ select {
   border: 2px solid #ebf2f9;
   cursor: pointer;
 }
+.message_history_person img{
+  width: 4vw;
+}
 #no_chat_history{
   color: #163644;
   text-align: center;
@@ -741,7 +749,7 @@ select {
 
 .wizard img {
   border-radius: 15px;
-  height: 550px;
+  width: 60vw;
 }
 .hide {
   visibility: hidden;
@@ -1007,7 +1015,12 @@ select {
   font-size: 1.2rem;
   text-align: right;
 }
-
+.newComment_input{
+  width: 100%;
+}
+.newComment_input textarea{
+  width: 100%;
+}
 .comments_form img {
   width: 100px;
   height: 100px;
@@ -1016,7 +1029,6 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: red;
   color: white;
 }
 .commentTail textarea{
