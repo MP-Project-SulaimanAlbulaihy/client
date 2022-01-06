@@ -20,7 +20,6 @@ const Login = () => {
         mobileOrUsername: e.target.mobileOrUsername.value,
         password: e.target.password.value,
       });
-      console.log(result.data);
       if (typeof result.data == "string") {
         setErrLogin(result.data);
       } else if (result.data.token) {

@@ -25,7 +25,6 @@ const Messages = () => {
 
   useEffect(() => {
     socketRef.current.on("message", (data) => {
-      console.log("ttttttttttttttttttttt", User?.result?._id);
       if (data.to == User?.result?._id && User)
         setChat([...chat, { from: data.from, to: data.to, message: data.message, username: data.username }]);
     });
@@ -39,7 +38,6 @@ const Messages = () => {
   const onMessageSubmit = (e) => {
     e.preventDefault();
     const { from, to, message } = state;
-    console.log(state);
     socketRef.current.emit("message", {
       from: User.result._id,
       to: currentTo,
@@ -53,7 +51,6 @@ const Messages = () => {
   const getChats = () => {
     try {
       axios.get(`${BASE_URL}/get_chat`, { headers: { Authorization: `Bearer ${User.token}` } }).then((result) => {
-        console.log(result.data);
         if (result.data) {
           setGetuserchat(result.data);
         }
@@ -68,7 +65,6 @@ const Messages = () => {
       axios
         .get(`${BASE_URL}/get_user_history`, { headers: { Authorization: `Bearer ${User.token}` } })
         .then((result) => {
-          console.log(result.data);
           if (result.data[0]?.userHistory.length) {
             setUserHistory(result.data[0]?.userHistory);
           }
@@ -87,7 +83,6 @@ const Messages = () => {
           { headers: { Authorization: `Bearer ${User.token}` } }
         )
         .then((result) => {
-          console.log(result.data);
           getUserHistory();
         });
     } catch (error) {
@@ -101,10 +96,6 @@ const Messages = () => {
       getUserHistory();
     }
   }, [User]);
-
-  useEffect(() => {
-    console.log(currentTo, "to");
-  }, [currentTo]);
 
   useEffect(() => {
     if (
@@ -121,7 +112,6 @@ const Messages = () => {
   const connectRoom = (i) => {
     setCurrentTo(i._id);
     if (currentTo) {
-      console.log(i._id);
       socketRef.current.emit("joined", { from: User.result._id, to: currentTo });
     }
   };

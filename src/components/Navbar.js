@@ -5,83 +5,141 @@ import { UserContext } from "../Context/UserContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const [showNotification, setshowNotification] = useState(false)
-  const {User,setUser} = useContext(UserContext)
-  const [activeMenu, setActiveMenu] = useState("")
+  const [showNotification, setshowNotification] = useState(false);
+  const { User, setUser } = useContext(UserContext);
+  const [activeMenu, setActiveMenu] = useState("");
 
-  const logout = ()=> {
-    localStorage.removeItem('user_data'); 
-    setUser(null)
-    navigate('/')
-  }
+  const logout = () => {
+    localStorage.removeItem("user_data");
+    setUser(null);
+    navigate("/");
+  };
 
-  const isTokenExpired = ()=> {
+  const isTokenExpired = () => {
     try {
-      axios.post(`${BASE_URL}/check_token_expired`, { token:User.token }).then((result) => {
-        if(result.data){
+      axios.post(`${BASE_URL}/check_token_expired`, { token: User.token }).then((result) => {
+        if (result.data) {
           logout();
         }
       });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if(User==null){
-      setUser(JSON.parse(localStorage.getItem('user_data')))
+    if (User == null) {
+      setUser(JSON.parse(localStorage.getItem("user_data")));
     }
-  }, [])
+  }, []);
   useEffect(() => {
-    if(User!==null) isTokenExpired()
-  }, [User])
+    if (User !== null) isTokenExpired();
+  }, [User]);
 
-  const [scrolled, setscrolled] = useState(0)
+  const [scrolled, setscrolled] = useState("");
+  const scrol = () => {
+    if (window.scrollY > 60) {
+      setscrolled("scroled");
+    } else {
+      setscrolled("");
+    }
+  };
+  window.addEventListener("scroll", scrol);
 
-  const scrol = ()=>{ 
-    setscrolled(document.body.scrollTop)
-  }
-  window.onscroll = ()=>setscrolled(document.body.scrollTop);
-  window.addEventListener('scroll', ()=>setscrolled(document.body.scrollTop));
-  useEffect(() => {
-    console.log(scrolled);
-  }, [scrolled])
-  // function scrollFunction() {
-  //   if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-  //     document.getElementsByClassName("navbar").style.width = "400px";
-  //     // document.getElementsByClassName("navbar").style.fontSize = "25px";
-  //   } else {
-  //     // document.getElementsByClassName("navbar").style.padding = "80px 10px";
-  //     // document.getElementsByClassName("navbar").style.fontSize = "35px";
-  //   }
-  // }
-  // console.log('user is ',User);
   return (
-    <div className="navbar" onScroll={scrol}>
-
-      {User?
-      <>
-        <div>
-          <button onClick={logout}> <p>خروج</p> </button>
-          <div class="dropdown">
-            <button class="dropbtn"> <p><i class="far fa-bell"></i> الاشعارات</p></button>
-              <div class="dropdown-content">
-                <a><p>لا يوجد اشعارات</p></a>
-               </div>
-          </div>
-        </div>
-        <div>
-            <button id={activeMenu=='messages'?`active`:null} onClick={() => {navigate("/messages"); setActiveMenu('messages')}}> <p>الرسائل</p> </button>
-            <button id={activeMenu=='fav'?`active`:null} onClick={() => {navigate("/favourite"); setActiveMenu('fav')}}> <p>مفضلتي</p> </button>
-            <button id={activeMenu=='profile'?`active`:null} onClick={() => {navigate("/dashboard"); setActiveMenu('profile')}}> <p>ملفي الشخصي</p> </button>
-            <button id={activeMenu=='home'?`active`:null} onClick={() => {navigate("/posts"); setActiveMenu('home')}}> <p>الرئيسية</p> </button>
-        </div>
-      </>:
+    <div className="navbar" id={`${scrolled}`}>
+      {User ? (
+        <>
           <div>
-            <button id={activeMenu=='login'?`active`:null} onClick={() => {navigate("/login"); setActiveMenu('login')}}> <p>دخول</p> </button>
-            <button id={activeMenu=='register'?`active`:null} onClick={() => {navigate("/signup"); setActiveMenu('register')}}> <p>تسجيل جديد</p> </button>
-          </div>}
-      <div onClick={() => {navigate("/")}}><img src="https://i.ibb.co/HXCzxGP/Screenshot-2022-01-01-052203.png" /></div>
+            <button onClick={logout}>
+
+              <p>خروج</p>
+            </button>
+            <div class="dropdown">
+              <button class="dropbtn">
+                <p>
+                  <i class="far fa-bell"></i> الاشعارات
+                </p>
+              </button>
+              <div class="dropdown-content">
+                <a>
+                  <p>لا يوجد اشعارات</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button
+              id={activeMenu == "messages" ? `active` : null}
+              onClick={() => {
+                navigate("/messages");
+                setActiveMenu("messages");
+              }}
+            >
+              <p>الرسائل</p>
+            </button>
+            <button
+              id={activeMenu == "fav" ? `active` : null}
+              onClick={() => {
+                navigate("/favourite");
+                setActiveMenu("fav");
+              }}
+            >
+              <p>مفضلتي</p>
+            </button>
+            <button
+              id={activeMenu == "profile" ? `active` : null}
+              onClick={() => {
+                navigate("/dashboard");
+                setActiveMenu("profile");
+              }}
+            >
+              
+              <p>ملفي الشخصي</p>
+            </button>
+            <button
+              id={activeMenu == "home" ? `active` : null}
+              onClick={() => {
+                navigate("/posts");
+                setActiveMenu("home");
+              }}
+            >
+              
+              <p>الرئيسية</p>
+            </button>
+          </div>
+        </>
+      ) : (
+        <div>
+          <button
+            id={activeMenu == "login" ? `active` : null}
+            onClick={() => {
+              navigate("/login");
+              setActiveMenu("login");
+            }}
+          >
+            
+            <p>دخول</p>
+          </button>
+          <button
+            id={activeMenu == "register" ? `active` : null}
+            onClick={() => {
+              navigate("/signup");
+              setActiveMenu("register");
+            }}
+          >
+            
+            <p>تسجيل جديد</p>
+          </button>
+        </div>
+      )}
+      <div
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <img src="https://i.ibb.co/HXCzxGP/Screenshot-2022-01-01-052203.png" />
+      </div>
     </div>
   );
 };

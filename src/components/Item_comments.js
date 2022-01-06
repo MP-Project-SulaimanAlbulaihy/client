@@ -21,7 +21,6 @@ const Item_comments = (props) => {
           },
           { headers: { Authorization: `Bearer ${User.token}` } }
         );
-        console.log(result.data);
         getComments();
       } catch (err) {
         console.error(err);
@@ -37,7 +36,6 @@ const Item_comments = (props) => {
       const result = await axios.post(`${BASE_URL}/comment/${props.postId}`, {
         postID: props.postId,
       });
-      console.log(result.data);
       setcommments(result.data);
       setNoComment(result.data.length);
     } catch (err) {
@@ -50,7 +48,6 @@ const Item_comments = (props) => {
       const resp = await axios.delete(`${BASE_URL}/comment/${id}`, {
         headers: { Authorization: `Bearer ${User.token}` },
       });
-      console.log(resp.data);
       getComments();
     } catch (err) {
       console.error(err);
@@ -66,7 +63,6 @@ const Item_comments = (props) => {
         },
         { headers: { Authorization: `Bearer ${User.token}` } }
       );
-      console.log(result.data);
       setShowEdit(false);
       getComments();
     } catch (err) {
@@ -78,9 +74,6 @@ const Item_comments = (props) => {
     getComments();
   }, []);
 
-  useEffect(() => {
-    console.log(showEdit);
-  }, [showEdit])
   return (
     <div>
       <form className="comments_form" onSubmit={sendComment}>

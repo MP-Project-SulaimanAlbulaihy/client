@@ -15,7 +15,6 @@ const MyOffers = () => {
         axios
           .get(`${BASE_URL}/my_offers`, { headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log('my offers ',result.data);
             if(typeof result.data == 'object') setPosts(result.data.filter(item=>item.post.status=='request'));
           });
       } catch (error) {

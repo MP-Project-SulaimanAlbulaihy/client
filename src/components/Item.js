@@ -27,7 +27,6 @@ const Item = () => {
   const getPost = () => {
     try {
       axios.get(`${BASE_URL}/post/${post_id}`).then((result) => {
-        console.log(result.data);
         setPost(result.data);
         setupdateImgs(result.data[0].img);
         for (let i = 0; i < result.data[0]?.favourite.length; i++) {
@@ -83,7 +82,6 @@ const Item = () => {
           { headers: { Authorization: `Bearer ${User.token}` } }
         )
         .then((result) => {
-          console.log(result.data);
         });
     } catch (error) {
       console.log(error);
@@ -95,7 +93,6 @@ const Item = () => {
       axios
         .get(`${BASE_URL}/favourite/${post[0]._id}`, { headers: { Authorization: `Bearer ${User.token}` } })
         .then((result) => {
-          console.log(result.data);
           if (result.data.result == "remove favourite") setFavouriteStatus(false);
           else if (result.data.result == "added favourite") setFavouriteStatus(true);
         });
@@ -131,7 +128,6 @@ const Item = () => {
         },
         { headers: { Authorization: `Bearer ${User.token}` } }
       );
-      console.log(result.data);
       getPost();
       setEdit(false);
     } catch (error) {

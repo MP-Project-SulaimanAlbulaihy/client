@@ -15,7 +15,6 @@ const AlreadyBorrowed = () => {
         axios
           .get(`${BASE_URL}/already_borrowed`, { headers: { Authorization: `Bearer ${User.token}` } })
           .then((result) => {
-            console.log(result.data);
             if(typeof result.data == 'object') setPosts(result.data);
           });
       } catch (error) {
