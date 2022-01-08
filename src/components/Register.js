@@ -1,8 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import Map from "./Map";
+// import firebase from "../firebase/phone_auth";
+import firebase from "../firebase/phone_auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,6 +14,9 @@ const Register = () => {
   const [pulledMark, setPulledMark] = useState([]);
   const [showMap, setShowMap] = useState(false);
   const { setUser } = useContext(UserContext);
+  const [verify, setverify] = useState(false);
+  const signupForm = useRef(null);
+
   const login = async (e) => {
     try {
       e.preventDefault();
@@ -40,9 +45,7 @@ const Register = () => {
         password: e.target.password.value,
         location: e.target.location.value,
       });
-      if (result.data[0]?.msg) {
-        setErr(result.data);
-      } else if (result.data.password) {
+      if (result.data.password) {
         const login = await axios.post(`${BASE_URL}/login`, {
           mobileOrUsername: e.target.username.value,
           password: e.target.password.value,
@@ -56,17 +59,68 @@ const Register = () => {
     }
   };
 
+  const validate = async () => {
+    try {
+      const result = await axios.post(`${BASE_URL}/validate`, {
+        username: signupForm.current.username.value,
+        mobile: signupForm.current.mobile.value,
+        password: signupForm.current.password.value,
+        location: signupForm.current.location.value,
+      });
+      if (result.data[0]?.msg) {
+        setErr(result.data);
+      } else if (result.data == "validated") {
+        setUpRecaptua();
+        const phoneNumber = "+966" + signupForm.current.mobile.value.slice(1);
+        const appVerifier = window.recaptchaVerifier;
+        console.log(phoneNumber);
+        firebase
+          .auth()
+          .signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then((confirmationResult) => {
+            // SMS sent. Prompt user to type the code from the message, then sign the
+            // user in with confirmationResult.confirm(code).
+            window.confirmationResult = confirmationResult;
+            console.log("otp sent");
+            // ...
+          })
+          .catch((error) => {
+            // Error; SMS not sent
+            console.log(error);
+            // ...
+          });
+        setverify(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const pull_mark = (data) => setPulledMark(data);
 
+  const setUpRecaptua = () => {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
+      size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        console.log("captuca verified");
+        onSignInSubmit();
+      },
+    });
+  };
 
+  const onSignInSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
-
       {showMap ? (
         <div className="map_container">
           <div className="map">
             <Map mark={pull_mark} />
-            <span onClick={() => setShowMap(false)}><i class="fas fa-times"></i></span>
+            <span onClick={() => setShowMap(false)}>
+              <i class="fas fa-times"></i>
+            </span>
             <button onClick={() => setShowMap(false)}>موافق</button>
           </div>
         </div>
@@ -78,32 +132,51 @@ const Register = () => {
         <input type="checkbox" id="chk" aria-hidden="true" defaultChecked={false} />
 
         <div class="signup">
-          <form onSubmit={signup}>
-            <label for="chk" aria-hidden="true">
-              تسجيل جديد
-            </label>
-            <input type="text" name="username" placeholder="اسم المستخدم" required />
-            <input type="text" name="mobile" placeholder="رقم الجوال" required />
-            <input type="password" name="password" placeholder="الرقم السري" required />
-            <div className="mapInput">
-              <input
-                type="text"
-                name="location"
-                value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : ""}
-                placeholder="الموقع"
-                required
-              />
-              <button onClick={() => setShowMap(true)} type="button">
-                اختار من الخريطة
-              </button>
-            </div>
-            <button>تسجيل جديد</button>
-            {err.map((item) => (
-              <p className="signUper">{item.msg}</p>
-            ))}
+          <form onSubmit={signup} ref={signupForm}>
+            {!verify ? (
+              <>
+                <div id="sign-in-button"></div>
+                <label for="chk" aria-hidden="true">
+                  تسجيل جديد
+                </label>
+                <input type="text" name="username" placeholder="اسم المستخدم" required />
+                <input type="text" name="mobile" placeholder="رقم الجوال" required />
+                <input type="password" name="password" placeholder="الرقم السري" required />
+                <div className="mapInput">
+                  <input
+                    type="text"
+                    name="location"
+                    value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : ""}
+                    placeholder="الموقع"
+                    required
+                  />
+                  <button onClick={() => setShowMap(true)} type="button">
+                    اختار من الخريطة
+                  </button>
+                </div>
+                <button type="button" onClick={()=>validate()}>
+                  تسجيل جديد
+                </button>
+                {err.map((item) => (
+                  <p className="signUper">{item.msg}</p>
+                ))}
+              </>
+            ) : (
+              <>
+                <label for="chk" aria-hidden="true" id="code">
+                  الكود السري
+                </label>
+                <input type="password" name="code" placeholder="أدخل رقم الكود المرسل.." required />
+                <button type="button" onClick={() => setverify(false)} id="back_boy">
+                  رجوع
+                </button>
+                <div id="sign-in-button"></div>
+
+                <button type="submit">إتمام التسجيل</button>
+              </>
+            )}
           </form>
         </div>
-
         <div class="login">
           <form onSubmit={login}>
             <label for="chk" aria-hidden="true">

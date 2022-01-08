@@ -817,6 +817,13 @@ select {
 #chk {
   display: none;
 }
+#code{
+  margin-top: 30%;
+}
+#back_boy{
+  color: #163644;
+  background-color: white;
+}
 .signup {
   position: relative;
   width: 100%;
