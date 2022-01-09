@@ -5,6 +5,7 @@ import { UserContext } from "../Context/UserContext";
 import Map from "./Map";
 // import firebase from "../firebase/phone_auth";
 import firebase from "../firebase/phone_auth";
+import Footer from "./Footer";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,6 +18,14 @@ const Register = () => {
   const [verify, setverify] = useState(false);
   const [verifyResult, setVerifyResult] = useState("");
   const signupForm = useRef(null);
+  const [user, setuser] = useState("");
+  const [mobile, setmobile] = useState("");
+  const [password, setpassword] = useState("");
+  const [location, setlocation] = useState("");
+
+  useEffect(() => {
+    if(pulledMark) setlocation(pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : "")
+  }, [pulledMark])
 
   const login = async (e) => {
     try {
@@ -39,18 +48,19 @@ const Register = () => {
 
 
   const signup = async (e) => {
-    console.log('im hereeee ', signupForm);
     try {
+      console.log(user);
       const resp = await axios.post(`${BASE_URL}/signup`, {
-        username: e.target.username.value,
-        mobile: e.target.mobile.value,
-        password: e.target.password.value,
-        location: e.target.location.value,
+        username: user,
+        mobile: mobile,
+        password: password,
+        location: location,
       });
+      console.log(resp.data);
       if (resp.data.password) {
         const login = await axios.post(`${BASE_URL}/login`, {
-          mobileOrUsername: e.target.username.value,
-          password: e.target.password.value,
+          mobileOrUsername: user,
+          password: password,
         });
         localStorage.setItem("user_data", JSON.stringify(login.data));
         setUser(login.data);
@@ -62,6 +72,7 @@ const Register = () => {
   };
 
   const validate = async () => {
+    console.log(location);
     try {
       const result = await axios.post(`${BASE_URL}/validate`, {
         username: signupForm.current.username.value,
@@ -73,24 +84,18 @@ const Register = () => {
         setErr(result.data);
       } else if (result.data == "validated") {
         setUpRecaptua();
-
-        const phoneNumber = "+966540424453";
+        const phoneNumber = "+966" + signupForm.current.mobile.value.slice(1);
         const appVerifier = window.recaptchaVerifier;
         console.log(phoneNumber);
         firebase
           .auth()
           .signInWithPhoneNumber(phoneNumber, appVerifier)
           .then((confirmationResult) => {
-            // SMS sent. Prompt user to type the code from the message, then sign the
-            // user in with confirmationResult.confirm(code).
             window.confirmationResult = confirmationResult;
             console.log("otp sent");
-            // ...
           })
           .catch((error) => {
-            // Error; SMS not sent
             console.log(error);
-            // ...
           });
         setverify(true);
       }
@@ -127,9 +132,6 @@ const Register = () => {
       });
   };
 
-  const onSignInSubmit = (e) => {
-    e.preventDefault();
-  };
   return (
     <>
       {showMap ? (
@@ -157,9 +159,9 @@ const Register = () => {
                 <label for="chk" aria-hidden="true">
                   تسجيل جديد
                 </label>
-                <input type="text" name="username" placeholder="اسم المستخدم" required />
-                <input type="text" name="mobile" placeholder="رقم الجوال" required />
-                <input type="password" name="password" placeholder="الرقم السري" required />
+                <input type="text" onChange={(e)=>setuser(e.target.value)} name="username" placeholder="اسم المستخدم" required />
+                <input type="text" onChange={(e)=>setmobile(e.target.value)} name="mobile" placeholder="رقم الجوال" required />
+                <input type="password" onChange={(e)=>setpassword(e.target.value)} name="password" placeholder="الرقم السري" required />
                 <div className="mapInput">
                   <input type="text" name="location" value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : ""} placeholder="الموقع" required />
                   <button onClick={() => setShowMap(true)} type="button">
@@ -202,6 +204,7 @@ const Register = () => {
           </form>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
