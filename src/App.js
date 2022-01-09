@@ -12,6 +12,7 @@ import { useMemo, useState } from "react";
 import Favourite from "./components/favourite";
 import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
+import VerifyNumber from "./components/VerifyNumber";
 
 function App() {
   const [wizard, setWizard] = useState('');
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/messages" element={<Messages />} />
           <Route exact path="/favourite" element={<Favourite />} />
+          <Route exact path="/verify_number" element={<VerifyNumber />} />
         </Routes>
       </UserContext.Provider>
     </div>
