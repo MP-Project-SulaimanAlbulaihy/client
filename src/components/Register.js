@@ -15,6 +15,7 @@ const Register = () => {
   const [showMap, setShowMap] = useState(false);
   const { setUser } = useContext(UserContext);
   const [verify, setverify] = useState(false);
+  const [verifyResult, setVerifyResult] = useState("");
   const signupForm = useRef(null);
 
   const login = async (e) => {
@@ -36,16 +37,17 @@ const Register = () => {
     }
   };
 
+
   const signup = async (e) => {
+    console.log('im hereeee ', signupForm);
     try {
-      e.preventDefault();
-      const result = await axios.post(`${BASE_URL}/signup`, {
+      const resp = await axios.post(`${BASE_URL}/signup`, {
         username: e.target.username.value,
         mobile: e.target.mobile.value,
         password: e.target.password.value,
         location: e.target.location.value,
       });
-      if (result.data.password) {
+      if (resp.data.password) {
         const login = await axios.post(`${BASE_URL}/login`, {
           mobileOrUsername: e.target.username.value,
           password: e.target.password.value,
@@ -71,7 +73,8 @@ const Register = () => {
         setErr(result.data);
       } else if (result.data == "validated") {
         setUpRecaptua();
-        const phoneNumber = "+966" + signupForm.current.mobile.value.slice(1);
+
+        const phoneNumber = "+966540424453";
         const appVerifier = window.recaptchaVerifier;
         console.log(phoneNumber);
         firebase
@@ -102,11 +105,26 @@ const Register = () => {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
       size: "invisible",
       callback: (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
         console.log("captuca verified");
-        onSignInSubmit();
       },
     });
+  };
+
+  const verifyCode = (e) => {
+    e.preventDefault();
+
+    const code = signupForm.current.code.value;
+    window.confirmationResult
+      .confirm(code)
+      .then((result) => {
+        const user = result.user;
+        console.log("Success code");
+        signup(e)
+      })
+      .catch((error) => {
+        console.log("Failed Code");
+        setVerifyResult("Incorrect code");
+      });
   };
 
   const onSignInSubmit = (e) => {
@@ -132,10 +150,10 @@ const Register = () => {
         <input type="checkbox" id="chk" aria-hidden="true" defaultChecked={false} />
 
         <div class="signup">
-          <form onSubmit={signup} ref={signupForm}>
+          <form onSubmit={verifyCode} ref={signupForm}>
+            <div id="sign-in-button"></div>
             {!verify ? (
               <>
-                <div id="sign-in-button"></div>
                 <label for="chk" aria-hidden="true">
                   تسجيل جديد
                 </label>
@@ -143,18 +161,12 @@ const Register = () => {
                 <input type="text" name="mobile" placeholder="رقم الجوال" required />
                 <input type="password" name="password" placeholder="الرقم السري" required />
                 <div className="mapInput">
-                  <input
-                    type="text"
-                    name="location"
-                    value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : ""}
-                    placeholder="الموقع"
-                    required
-                  />
+                  <input type="text" name="location" value={pulledMark.lat ? pulledMark.lat + "," + pulledMark.lng : ""} placeholder="الموقع" required />
                   <button onClick={() => setShowMap(true)} type="button">
                     اختار من الخريطة
                   </button>
                 </div>
-                <button type="button" onClick={()=>validate()}>
+                <button type="button" onClick={() => validate()}>
                   تسجيل جديد
                 </button>
                 {err.map((item) => (
@@ -167,6 +179,7 @@ const Register = () => {
                   الكود السري
                 </label>
                 <input type="password" name="code" placeholder="أدخل رقم الكود المرسل.." required />
+                <p className="signUper">{verifyResult}</p>
                 <button type="button" onClick={() => setverify(false)} id="back_boy">
                   رجوع
                 </button>
