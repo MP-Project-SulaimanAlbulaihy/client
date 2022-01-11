@@ -6,8 +6,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [showNotification, setshowNotification] = useState(false);
+  const [toggle, setToggle] = useState(false)
   const { User, setUser } = useContext(UserContext);
   const [activeMenu, setActiveMenu] = useState("");
+  const [scrolled, setscrolled] = useState("");
 
   const logout = () => {
     localStorage.removeItem("user_data");
@@ -36,7 +38,6 @@ const Navbar = () => {
     if (User !== null) isTokenExpired();
   }, [User]);
 
-  const [scrolled, setscrolled] = useState("");
   const scrol = () => {
     if (window.scrollY > 60) {
       setscrolled("scroled");
@@ -48,11 +49,12 @@ const Navbar = () => {
 
   return (
     <div className="navbar" id={`${scrolled}`}>
+      <div className="nav_toggle" onClick={()=>setToggle(!toggle)}><i class="fa-solid fa-bars"></i></div>
+      <div className="nav_without_logo" id={`${toggle?"toggled":""}`}>
       {User ? (
         <>
-          <div>
+          <div style={{width:'35%'}}>
             <button onClick={logout}>
-
               <p>خروج</p>
             </button>
             <div class="dropdown">
@@ -133,6 +135,7 @@ const Navbar = () => {
           </button>
         </div>
       )}
+      </div>
       <div
         onClick={() => {
           navigate("/");
