@@ -36,52 +36,51 @@ button {
   height: 50px;
   align-items: center;
   /* color: white; */
-  position:sticky ;
+  position: sticky;
   top: 0;
 }
-#scroled{
+#scroled {
   animation: ss 0.5s ease-in;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   z-index: 2000;
 }
 @keyframes ss {
   0% {
-    background: rgba(255, 255, 255, 0)
+    background: rgba(255, 255, 255, 0);
   }
   100% {
-    background: rgba(255,255,255,0.8)
+    background: rgba(255, 255, 255, 0.8);
   }
 }
-#scroled button{
+#scroled button {
   color: #194051;
 }
-#scroled img{
+#scroled img {
   background: rgb(255, 255, 255);
   border-radius: 50%;
   margin-top: 65px;
 }
-#active{
+#active {
   color: rgb(223, 223, 223);
 }
 .navbar button {
   animation: navbar 1s ease-in;
   height: 100%;
-  width: 150px;
+  padding: 0 2vw;
   border: none;
   color: white;
   background-color: rgba(165, 42, 42, 0);
-  font-size: 1.4rem;
+  font-size: 1.8vw;
 }
 .navbar button:hover {
   color: rgb(223, 223, 223);
 }
 .navbar img {
   cursor: pointer;
-  width: 170px;
+  width: 13vw;
   margin-top: 50px;
   height: 100px;
 }
-
 @keyframes navbar {
   0% {
     margin-bottom: 150px;
@@ -93,7 +92,7 @@ button {
 .fa-bell {
   vertical-align: middle;
 }
-.noti{
+.noti {
   background-color: white;
   height: 7vh;
   position: absolute;
@@ -108,42 +107,89 @@ button {
   padding: 10px;
 }
 .dropbtn {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
-  /* padding: 16px; */
   font-size: 16px;
   border: none;
   cursor: pointer;
 }
-
 .dropdown {
   text-align: center;
   position: relative;
   display: inline-block;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
+.nav_without_logo {
+  display: inline;
+  width: 100%;
+  display: flex;
+}
+@media screen and (max-width: 600px) {
+  .nav_toggle {
+    display: block !important;
+  }
+  .nav_without_logo {
+    display: none;
+  }
+}
+@media screen and (min-width: 601px) {
+  .nav_without_logo {
+    display: block !important;
+  }
+}
+.nav_toggle {
+  display: none;
+}
+.nav_toggle .fa-bars {
+  font-size: 6vw;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 2vw 4vw 0 4vw;
+}
+.nav_toggle .fa-bars {
+  position: relative;
+  z-index: 4;
+}
+#toggled {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  padding-top: 6vh;
+  background-color: white;
+}
+#toggled button {
+  animation-delay: -99s;
+  height: 7vh;
+  display: flex;
+  justify-content: center;
+  color: #163644;
+  border-bottom: 1px solid #163644;
+  flex-direction: column;
+  width: 100%;
+  font-size: 4vw;
+  align-items: center;
+}
 
 /* Add Post */
 .add_post {
@@ -256,11 +302,11 @@ select {
   font-size: 1.1vw;
   width: 20%;
 }
-#special_status{
+#special_status {
   width: 50%;
 }
 .nothing_yet {
-  margin: auto auto; 
+  margin: auto auto;
 }
 .single_one:hover {
   background-color: white;
@@ -286,7 +332,7 @@ select {
   font-size: 1.4vw;
   color: #194051;
 }
-#edit_logo{
+#edit_logo {
   padding: 2px;
 }
 .item_title {
@@ -362,12 +408,12 @@ select {
   color: #194051;
   padding: 10px 30px 10px 10px;
 }
-.edit div{
+.edit div {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
-#iii{
+#iii {
   flex-direction: row;
   justify-content: left;
 }
@@ -384,7 +430,7 @@ select {
   color: #234b73;
   resize: none;
 }
-.notePageRest button{
+.notePageRest button {
   background-color: #245d75;
   color: white;
   width: 25%;
@@ -392,34 +438,34 @@ select {
   float: left;
   font-size: 1rem;
 }
-.notePageRest button:hover{
+.notePageRest button:hover {
   background-color: #307c9c;
 }
-#back_note_page{
-  background-color:#f8f8f8;
+#back_note_page {
+  background-color: #f8f8f8;
   color: #163644;
   margin-left: 10px;
   border: 1px solid #245d75;
 }
-#back_note_page:hover{
+#back_note_page:hover {
   background-color: #f1f1f1;
 }
-#delete_post{
+#delete_post {
   background-color: rgb(219, 126, 126);
-  position:absolute;
+  position: absolute;
   right: 30px;
   padding: 5px 0;
 }
-#delete_post:hover{
+#delete_post:hover {
   background-color: rgb(204, 64, 64);
 }
-.success_page{
+.success_page {
   color: #234b73;
   font-size: 1.5rem;
   text-align: center;
   margin-top: 10px;
 }
-.success_page p{
+.success_page p {
   margin-top: 30px;
 }
 /* Dashboard page */
@@ -432,7 +478,7 @@ select {
 }
 .profile_content {
   width: 100%;
-  background-color:  rgb(241, 241, 241);
+  background-color: rgb(241, 241, 241);
   display: flex;
   min-height: 27vh;
   justify-content: space-between;
@@ -444,18 +490,18 @@ select {
   width: 35%;
   position: relative;
 }
-.profile img{
+.profile img {
   border-radius: 50%;
   margin-top: 5px;
 }
-.profile_info{
+.profile_info {
   padding: 15px;
   width: 63%;
   display: flex;
   flex-direction: column;
   font-size: 1.1vw;
 }
-.profile_info button{
+.profile_info button {
   width: 30%;
   margin: auto auto;
   height: 35px;
@@ -464,40 +510,40 @@ select {
   font-size: 0.9vw;
   border: none;
 }
-.profile_info button:hover{
+.profile_info button:hover {
   background-color: #1f4f64;
 }
-.profile_info div{
+.profile_info div {
   width: 100%;
   display: flex;
   justify-content: space-between;
   height: 50px;
   align-items: center;
 }
-#edit_profile_image{
+#edit_profile_image {
   position: absolute;
   font-size: 1.1vw;
   bottom: 23%;
   background-color: #9d9d9d6b;
   border-radius: 20px;
-  color:#163644;
+  color: #163644;
   width: 15%;
   border: none;
   padding: 2px;
 }
-#edit_profile_image:hover{
+#edit_profile_image:hover {
   background-color: #9d9d9d8c;
 }
-.edit_form{
+.edit_form {
   padding: 20px;
   margin-top: 15%;
 }
-.edit_form button{
+.edit_form button {
   padding: 4px;
   border: none;
   margin: 20px 0;
 }
-.edit_form input{
+.edit_form input {
   padding: 18px;
   height: 35px;
 }
@@ -510,17 +556,17 @@ select {
   background-color: rgb(241, 241, 241);
   margin: 40px 0;
 }
-.borrowed p:nth-child(1){
+.borrowed p:nth-child(1) {
   margin-bottom: 40px;
   padding: 10px 19px 0 0;
   font-size: 1.3vw;
 }
-.item_full h1{
+.item_full h1 {
   text-align: center;
   margin: -30px 0 30px 0;
   font-size: 2vw;
 }
-.acceptBtn{
+.acceptBtn {
   background-color: #245d75;
   width: 20%;
   height: 40px;
@@ -529,11 +575,10 @@ select {
   border: none;
   margin-left: 20px;
 }
-.acceptBtn:hover{
+.acceptBtn:hover {
   background-color: #1f4f64;
-
 }
-.rejectBtn{
+.rejectBtn {
   background-color: rgb(219, 126, 126);
   color: white;
   height: 40px;
@@ -542,7 +587,7 @@ select {
   font-size: 1.3vw;
   margin-left: 40px;
 }
-.rejectBtn:hover{
+.rejectBtn:hover {
   background-color: rgb(204, 64, 64);
 }
 /* Messages page */
@@ -550,7 +595,7 @@ select {
   width: 60%;
   margin: 0 auto;
 }
-.messages_component h1{
+.messages_component h1 {
   color: white;
 }
 .messages_component .subject {
@@ -581,7 +626,7 @@ select {
   align-items: flex-end;
   overflow: auto;
 }
-#me_chat{
+#me_chat {
   background-color: rgb(0, 79, 250);
   color: rgb(241, 241, 241);
 }
@@ -610,7 +655,6 @@ select {
 }
 .chat .input input::placeholder {
   padding: 5px;
-
 }
 .chat .input button {
   height: 80%;
@@ -634,10 +678,10 @@ select {
   border: 2px solid #ebf2f9;
   cursor: pointer;
 }
-.message_history_person img{
+.message_history_person img {
   width: 4vw;
 }
-#no_chat_history{
+#no_chat_history {
   color: #163644;
   text-align: center;
   position: absolute;
@@ -647,12 +691,12 @@ select {
 }
 
 /* Favourite page */
-.fav_component{
+.fav_component {
   display: flex;
   flex-direction: column;
   margin-top: 6%;
 }
-.favourite_title{
+.favourite_title {
   padding-right: 1%;
   background-color: #244b75;
   color: rgb(248, 248, 248);
@@ -667,7 +711,7 @@ select {
   width: 60%;
   margin: 0px auto;
 }
-#no_favourite_yet{
+#no_favourite_yet {
   text-align: center;
   background-color: #f8f8f8;
 }
@@ -720,10 +764,9 @@ select {
 .showReqsBtn:hover {
   background-color: white;
   animation: border 0.7s ease-in;
-  
 }
 
-.showReqsBtn h1:hover{
+.showReqsBtn h1:hover {
   font-size: 2.95vw;
 }
 .showReqsBtn h1 {
@@ -765,7 +808,7 @@ select {
 .col p {
   font-size: 1.2vw;
 }
-.col h3{
+.col h3 {
   color: #163644;
 }
 
@@ -789,8 +832,8 @@ select {
 .wizard_container span {
   position: absolute;
   font-size: 1.7rem;
-  color:#163644;
-  background-color:#ebf2f9ee;
+  color: #163644;
+  background-color: #ebf2f9ee;
   margin: -20px;
   border-radius: 50%;
   width: 45px;
@@ -817,10 +860,10 @@ select {
 #chk {
   display: none;
 }
-#code{
+#code {
   margin-top: 30%;
 }
-#back_boy{
+#back_boy {
   color: #163644;
   background-color: white;
 }
@@ -945,7 +988,7 @@ select {
 .map_container span {
   position: absolute;
   font-size: 1.5rem;
-  color:#163644;
+  color: #163644;
   background-color: #ebf2f9ee;
   margin: -15px;
   border-radius: 50%;
@@ -953,7 +996,7 @@ select {
   text-align: center;
   cursor: pointer;
 }
-.map_container span i{
+.map_container span i {
   vertical-align: middle;
 }
 .map_container span:hover {
@@ -1044,10 +1087,10 @@ select {
   font-size: 1.2rem;
   text-align: right;
 }
-.newComment_input{
+.newComment_input {
   width: 100%;
 }
-.newComment_input textarea{
+.newComment_input textarea {
   width: 100%;
 }
 .comments_form img {
@@ -1060,7 +1103,7 @@ select {
   justify-content: space-between;
   color: white;
 }
-.commentTail textarea{
+.commentTail textarea {
   width: 100%;
 }
 textarea::placeholder {
